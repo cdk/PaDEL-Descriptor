@@ -860,6 +860,16 @@ is divided into following sections:
                 <include name="**/*.java"/>
                 <exclude name="*.java"/>
             </fileset>
+            <!-- Define custom tags -->
+            <tag name="cdk.keyword" description="Specifies a CDK keyword"/>
+            <tag name="cdk.dictref" description="Specifies a CDK dictref"/>
+            <tag name="cdk.set" description="Specifies a CDK set"/>
+            <tag name="cdk.module" description="Specifies a CDK module"/>
+            <tag name="cdk.created" description="Specifies a CDK created"/>
+            <tag name="cdk.cite" description="Specifies a CDK cite"/>
+            <tag name="cdk.githash" description="Specifies a CDK githash"/>
+            <tag name="cdk.svnrev" description="Specifies a CDK svnrev"/>
+            <tag name="cdk.bug" description="Specifies a CDK bug"/>
             <arg line="${javadoc.endorsed.classpath.cmd.line.arg}"/>
         </javadoc>
         <copy todir="${dist.javadoc.dir}">
