@@ -185,9 +185,9 @@ is divided into following sections:
             <istrue value="${do.depend}"/>
         </condition>
         <path id="endorsed.classpath.path" path="${endorsed.classpath}"/>
-        <!-- <condition else="" property="endorsed.classpath.cmd.line.arg" value="-Xbootclasspath/p:'${toString:endorsed.classpath.path}'"> 
+        <condition else="" property="endorsed.classpath.cmd.line.arg" value="-Xbootclasspath/p:'${toString:endorsed.classpath.path}'"> 
             <length length="0" string="${endorsed.classpath}" when="greater"/>
-        </condition> -->
+        </condition>
         <condition else="false" property="jdkBug6558476">
             <and>
                 <matches pattern="1\.[56]" string="${java.specification.version}"/>
@@ -253,7 +253,7 @@ is divided into following sections:
                     <classpath>
                         <path path="@{classpath}"/>
                     </classpath>
-                    <compilerarg line="${endorsed.classpath.cmd.line.arg}"/>
+                    <!-- <compilerarg line="${endorsed.classpath.cmd.line.arg}"/> -->
                     <compilerarg line="${javac.compilerargs}"/>
                     <compilerarg value="-processorpath"/>
                     <compilerarg path="@{processorpath}:${empty.dir}"/>
@@ -292,7 +292,7 @@ is divided into following sections:
                     <classpath>
                         <path path="@{classpath}"/>
                     </classpath>
-                    <compilerarg line="${endorsed.classpath.cmd.line.arg}"/>
+                    <!-- <compilerarg line="${endorsed.classpath.cmd.line.arg}"/> -->
                     <compilerarg line="${javac.compilerargs}"/>
                     <customize/>
                 </javac>
@@ -355,7 +355,7 @@ is divided into following sections:
                     </syspropertyset>
                     <formatter type="brief" usefile="false"/>
                     <formatter type="xml"/>
-                    <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+                    <!-- <jvmarg line="${endorsed.classpath.cmd.line.arg}"/> -->
                     <jvmarg value="-ea"/>
                     <jvmarg line="${run.jvmargs}"/>
                 </junit>
@@ -386,7 +386,7 @@ is divided into following sections:
                 <property environment="env"/>
                 <resolve name="profiler.current.path" value="${profiler.info.pathvar}"/>
                 <java classname="@{classname}" dir="${profiler.info.dir}" fork="true" jvm="${profiler.info.jvm}">
-                    <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+                    <!-- <jvmarg line="${endorsed.classpath.cmd.line.arg}"/> -->
                     <jvmarg value="${profiler.info.jvmargs.agent}"/>
                     <jvmarg line="${profiler.info.jvmargs}"/>
                     <env key="${profiler.info.pathvar}" path="${profiler.info.agentpath}:${profiler.current.path}"/>
@@ -458,7 +458,7 @@ is divided into following sections:
             <element name="customize" optional="true"/>
             <sequential>
                 <java classname="@{classname}" dir="${work.dir}" fork="true">
-                    <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+                    <!-- <jvmarg line="${endorsed.classpath.cmd.line.arg}"/> -->
                     <jvmarg line="${debug-args-line}"/>
                     <jvmarg value="-Xrunjdwp:transport=${debug-transport},address=${jpda.address}"/>
                     <jvmarg value="-Dfile.encoding=${runtime.encoding}"/>
@@ -483,7 +483,7 @@ is divided into following sections:
             <element name="customize" optional="true"/>
             <sequential>
                 <java classname="@{classname}" dir="${work.dir}" fork="true">
-                    <jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+                    <!-- <jvmarg line="${endorsed.classpath.cmd.line.arg}"/> -->
                     <jvmarg value="-Dfile.encoding=${runtime.encoding}"/>
                     <redirector errorencoding="${runtime.encoding}" inputencoding="${runtime.encoding}" outputencoding="${runtime.encoding}"/>
                     <jvmarg line="${run.jvmargs}"/>
@@ -842,14 +842,14 @@ is divided into following sections:
             -->
     <target depends="init" if="have.sources" name="-javadoc-build">
         <mkdir dir="${dist.javadoc.dir}"/>
-        <condition else="" property="javadoc.endorsed.classpath.cmd.line.arg" value="-J${endorsed.classpath.cmd.line.arg}">
+        <!-- <condition else="" property="javadoc.endorsed.classpath.cmd.line.arg" value="-J${endorsed.classpath.cmd.line.arg}">
             <and>
                 <isset property="endorsed.classpath.cmd.line.arg"/>
                 <not>
                     <equals arg1="${endorsed.classpath.cmd.line.arg}" arg2=""/>
                 </not>
             </and>
-        </condition>
+        </condition> -->
         <javadoc additionalparam="${javadoc.additionalparam}" author="${javadoc.author}" charset="UTF-8" destdir="${dist.javadoc.dir}" docencoding="UTF-8" encoding="${javadoc.encoding.used}" failonerror="true" noindex="${javadoc.noindex}" nonavbar="${javadoc.nonavbar}" notree="${javadoc.notree}" private="${javadoc.private}" source="${javac.source}" splitindex="${javadoc.splitindex}" use="${javadoc.use}" useexternalfile="true" version="${javadoc.version}" windowtitle="${javadoc.windowtitle}">
             <classpath>
                 <path path="${javac.classpath}"/>
@@ -861,7 +861,7 @@ is divided into following sections:
                 <include name="**/*.java"/>
                 <exclude name="*.java"/>
             </fileset>
-            <arg line="${javadoc.endorsed.classpath.cmd.line.arg}"/>
+            <!-- <arg line="${javadoc.endorsed.classpath.cmd.line.arg}"/> -->
         </javadoc>
         <copy todir="${dist.javadoc.dir}">
             <fileset dir="${src.dir}" excludes="${excludes}" includes="${includes}">
