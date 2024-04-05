@@ -185,9 +185,9 @@ is divided into following sections:
             <istrue value="${do.depend}"/>
         </condition>
         <path id="endorsed.classpath.path" path="${endorsed.classpath}"/>
-        <condition else="" property="endorsed.classpath.cmd.line.arg" value="-Xbootclasspath/p:'${toString:endorsed.classpath.path}'">
+        <!-- <condition else="" property="endorsed.classpath.cmd.line.arg" value="-Xbootclasspath/p:'${toString:endorsed.classpath.path}'"> 
             <length length="0" string="${endorsed.classpath}" when="greater"/>
-        </condition>
+        </condition> -->
         <condition else="false" property="jdkBug6558476">
             <and>
                 <matches pattern="1\.[56]" string="${java.specification.version}"/>
