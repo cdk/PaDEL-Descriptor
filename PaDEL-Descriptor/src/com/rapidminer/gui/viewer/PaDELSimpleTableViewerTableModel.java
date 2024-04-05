@@ -25,7 +25,7 @@ package com.rapidminer.gui.viewer;
 import com.rapidminer.tools.PaDELSimpleTable;
 import javax.swing.table.AbstractTableModel;
 
-/** The model for the {@link padel.gui.viewer.PaDELTableViewerTableModel}. 
+/** The model for the {*@link padel.gui.viewer.PaDELTableViewerTableModel}. 
  * 
  *  @author Ingo Mierswa, Yap Chun Wei
  *  @version $Id$
