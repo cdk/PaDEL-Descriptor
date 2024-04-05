@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: 11.3-b02 (Sun Microsystems Inc.)
+Implementation-Vendor: Pharmaceutical Data Exploration Laboratory
+Implementation-Title: PaDEL-Descriptor
+Implementation-URL: http://padel.nus.edu.sg
+Implementation-Version: 5.2.3
+Specification-Title: PaDEL
+Specification-Version: 5.2.3
+RapidMiner-Version: 5.2
+RapidMiner-Type: RapidMiner_Extension
+Plugin-Dependencies: 
+Extension-ID: rmx_padel_descriptor
+Namespace: padel_descriptor
+Initialization-Class: 
+IOObject-Descriptor: /com/rapidminer/resources/ioobjectsPaDELDescriptor.xml
+Operator-Descriptor: /com/rapidminer/resources/OperatorsPaDELDescriptor.xml
+ParseRule-Descriptor: 
+Group-Descriptor: 
+Error-Descriptor: 
+UserError-Descriptor: 
+GUI-Descriptor: 
+X-COMMENT: Main-Class will be added automatically by build
+

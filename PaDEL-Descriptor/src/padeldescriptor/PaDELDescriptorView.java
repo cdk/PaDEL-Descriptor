@@ -1,0 +1,663 @@
+/*
+ * PaDELDescriptorView.java
+ */
+
+package padeldescriptor;
+
+import java.awt.Image;
+import java.awt.Toolkit;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.ResourceMap;
+import org.jdesktop.application.SingleFrameApplication;
+import org.jdesktop.application.FrameView;
+import org.jdesktop.application.TaskMonitor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.lang.reflect.Method;
+import java.util.LinkedHashSet;
+import java.util.Properties;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Timer;
+import javax.swing.Icon;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import libpadeldescriptor.DescriptorStruct;
+import libpadeldescriptor.libPaDELDescriptorType;
+
+/**
+ * The application's main frame.
+ */
+public class PaDELDescriptorView extends FrameView {
+
+    public PaDELDescriptorView(SingleFrameApplication app) {
+        super(app);
+        
+        initComponents();
+
+        // Load configurations.
+        LoadConfiguration("PaDEL-Descriptor.ini");
+
+        // Load configurations.
+        LoadDescriptorTypes("descriptors.xml", true);
+
+        Image image = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("padeldescriptor/resources/PaDELlogo.jpg"));
+        getFrame().setIconImage(image);
+
+        // status bar initialization - message timeout, idle icon and busy animation, etc
+        ResourceMap resourceMap = getResourceMap();
+        int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
+        messageTimer = new Timer(messageTimeout, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statusMessageLabel.setText("");
+            }
+        });
+        messageTimer.setRepeats(false);
+        int busyAnimationRate = resourceMap.getInteger("StatusBar.busyAnimationRate");
+        for (int i = 0; i < busyIcons.length; i++) {
+            busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
+        }
+        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
+                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
+            }
+        });
+        idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
+        statusAnimationLabel.setIcon(idleIcon);
+        progressBar.setVisible(false);
+
+        // connecting action tasks to status bar via TaskMonitor
+        TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
+        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                String propertyName = evt.getPropertyName();
+                if ("started".equals(propertyName)) {
+                    if (!busyIconTimer.isRunning()) {
+                        statusAnimationLabel.setIcon(busyIcons[0]);
+                        busyIconIndex = 0;
+                        busyIconTimer.start();
+                    }
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(true);
+                } else if ("done".equals(propertyName)) {
+                    busyIconTimer.stop();
+                    statusAnimationLabel.setIcon(idleIcon);
+                    progressBar.setVisible(false);
+                    progressBar.setValue(0);
+                } else if ("message".equals(propertyName)) {
+                    String text = (String)(evt.getNewValue());
+                    statusMessageLabel.setText((text == null) ? "" : text);
+                    messageTimer.restart();
+                } else if ("progress".equals(propertyName)) {
+                    int value = (Integer)(evt.getNewValue());
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(false);
+                    progressBar.setValue(value);
+                }
+            }
+        });
+    }
+
+    @Action
+    public void showAboutBox() {
+        if (aboutBox == null) {
+            JFrame mainFrame = PaDELDescriptorApp.getApplication().getMainFrame();
+            aboutBox = new PaDELDescriptorAboutBox(mainFrame);
+            aboutBox.setLocationRelativeTo(mainFrame);
+        }
+        PaDELDescriptorApp.getApplication().show(aboutBox);
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        mainPanel = new javax.swing.JPanel();
+        start = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        config = new padeldescriptor.PaDELDescriptorPropertySheetPage1();
+        descriptor2DConfig = new padeldescriptor.PaDELDescriptorPropertySheetPage2();
+        descriptor3DConfig = new padeldescriptor.PaDELDescriptorPropertySheetPage3();
+        fingerprintConfig = new padeldescriptor.PaDELDescriptorPropertySheetPage4();
+        menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        LoadConfig = new javax.swing.JMenuItem();
+        SaveConfig = new javax.swing.JMenuItem();
+        loadDescriptors = new javax.swing.JMenuItem();
+        saveDescriptors = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
+        statusPanel = new javax.swing.JPanel();
+        javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
+        statusMessageLabel = new javax.swing.JLabel();
+        statusAnimationLabel = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
+        status = new javax.swing.JLabel();
+
+        mainPanel.setName("mainPanel"); // NOI18N
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(padeldescriptor.PaDELDescriptorApp.class).getContext().getActionMap(PaDELDescriptorView.class, this);
+        start.setAction(actionMap.get("Start")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(padeldescriptor.PaDELDescriptorApp.class).getContext().getResourceMap(PaDELDescriptorView.class);
+        start.setText(resourceMap.getString("start.text")); // NOI18N
+        start.setToolTipText(resourceMap.getString("start.toolTipText")); // NOI18N
+        start.setName("start"); // NOI18N
+
+        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+
+        config.setMinimumSize(new java.awt.Dimension(1, 1));
+        config.setName("config"); // NOI18N
+        jTabbedPane1.addTab(resourceMap.getString("config.TabConstraints.tabTitle"), config); // NOI18N
+
+        descriptor2DConfig.setName("descriptor2DConfig"); // NOI18N
+        jTabbedPane1.addTab(resourceMap.getString("descriptor2DConfig.TabConstraints.tabTitle"), descriptor2DConfig); // NOI18N
+
+        descriptor3DConfig.setName("descriptor3DConfig"); // NOI18N
+        jTabbedPane1.addTab(resourceMap.getString("descriptor3DConfig.TabConstraints.tabTitle"), descriptor3DConfig); // NOI18N
+
+        fingerprintConfig.setName("fingerprintConfig"); // NOI18N
+        jTabbedPane1.addTab(resourceMap.getString("fingerprintConfig.TabConstraints.tabTitle"), fingerprintConfig); // NOI18N
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(525, Short.MAX_VALUE)
+                .addComponent(start)
+                .addContainerGap())
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(start)
+                .addContainerGap())
+        );
+
+        menuBar.setName("menuBar"); // NOI18N
+
+        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
+        fileMenu.setName("fileMenu"); // NOI18N
+
+        LoadConfig.setAction(actionMap.get("LoadConfig")); // NOI18N
+        LoadConfig.setText(resourceMap.getString("LoadConfig.text")); // NOI18N
+        LoadConfig.setName("LoadConfig"); // NOI18N
+        fileMenu.add(LoadConfig);
+
+        SaveConfig.setAction(actionMap.get("SaveConfig")); // NOI18N
+        SaveConfig.setText(resourceMap.getString("SaveConfig.text")); // NOI18N
+        SaveConfig.setName("SaveConfig"); // NOI18N
+        fileMenu.add(SaveConfig);
+
+        loadDescriptors.setAction(actionMap.get("BrowseDescriptorTypes")); // NOI18N
+        loadDescriptors.setText(resourceMap.getString("loadDescriptors.text")); // NOI18N
+        loadDescriptors.setName("loadDescriptors"); // NOI18N
+        fileMenu.add(loadDescriptors);
+
+        saveDescriptors.setAction(actionMap.get("SaveDescriptorTypes")); // NOI18N
+        saveDescriptors.setText(resourceMap.getString("saveDescriptors.text")); // NOI18N
+        saveDescriptors.setName("saveDescriptors"); // NOI18N
+        fileMenu.add(saveDescriptors);
+
+        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setName("exitMenuItem"); // NOI18N
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
+        helpMenu.setName("helpMenu"); // NOI18N
+
+        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
+        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
+
+        statusPanel.setName("statusPanel"); // NOI18N
+
+        statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
+
+        statusMessageLabel.setName("statusMessageLabel"); // NOI18N
+
+        statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        statusAnimationLabel.setName("statusAnimationLabel"); // NOI18N
+
+        progressBar.setName("progressBar"); // NOI18N
+
+        status.setText(resourceMap.getString("status.text")); // NOI18N
+        status.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        status.setName("status"); // NOI18N
+
+        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        statusPanel.setLayout(statusPanelLayout);
+        statusPanelLayout.setHorizontalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(status, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+                    .addComponent(statusMessageLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statusAnimationLabel)
+                .addContainerGap())
+        );
+        statusPanelLayout.setVerticalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
+                .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(statusMessageLabel)
+                        .addComponent(statusAnimationLabel))
+                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        setComponent(mainPanel);
+        setMenuBar(menuBar);
+        setStatusBar(statusPanel);
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    /**
+     * Load program configuration.
+     */
+    protected void LoadConfiguration(String filename)
+    {
+        try
+        {
+            Properties configFile = new Properties();
+            if (new File(filename).exists())
+            {
+                FileInputStream fis = new FileInputStream(filename);
+                configFile.load(fis);
+
+                config.data.setDirectory(configFile.getProperty("Directory"));
+                config.data.setDescriptorFile(configFile.getProperty("DescriptorFile"));
+                config.data.setCompute2D(Boolean.valueOf(configFile.getProperty("Compute2D")));
+                config.data.setCompute3D(Boolean.valueOf(configFile.getProperty("Compute3D")));
+                config.data.setComputeFingerprints(Boolean.valueOf(configFile.getProperty("ComputeFingerprints")));
+                config.data.setRemoveSalt(Boolean.valueOf(configFile.getProperty("RemoveSalt")));                
+                config.data.setDetectAromaticity(Boolean.valueOf(configFile.getProperty("DetectAromaticity")));
+                config.data.setStandardizeTautomers(Boolean.valueOf(configFile.getProperty("StandardizeTautomers")));
+                config.data.setTautomerFile(configFile.getProperty("TautomerFile"));
+                config.data.setStandardizeNitro(Boolean.valueOf(configFile.getProperty("StandardizeNitro")));       
+                config.data.setRetain3D(Boolean.valueOf(configFile.getProperty("Retain3D"))); 
+                config.data.setConvert3D(configFile.getProperty("Convert3D"));
+                config.data.setLog(Boolean.valueOf(configFile.getProperty("Log")));
+                config.data.setMaxThreads(Integer.valueOf(configFile.getProperty("MaxThreads")));
+                config.data.setMaxJobsWaiting(Integer.valueOf(configFile.getProperty("MaxJobsWaiting")));
+                config.data.setMaxRunTime(Long.valueOf(configFile.getProperty("MaxRunTime")));
+                config.data.setMaxCpdPerFile(Integer.valueOf(configFile.getProperty("MaxCpdPerFile")));
+                config.data.setRetainOrder(Boolean.valueOf(configFile.getProperty("RetainOrder")));
+                config.data.setUseFilenameAsMolName(Boolean.valueOf(configFile.getProperty("UseFilenameAsMolName")));
+                config.sheet.readFromObject(config.data);
+                fis.close();
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger("global").log(Level.FINE, "Cannot load configuration", ex);
+        }
+   }
+
+    /**
+     * Save program configuration.
+     */
+    protected void SaveConfiguration(String filename)
+    {
+        try
+        {
+            Properties configFile = new Properties();
+
+            configFile.setProperty("Directory", config.data.getDirectory());
+            configFile.setProperty("DescriptorFile", config.data.getDescriptorFile());
+            configFile.setProperty("Compute2D", Boolean.toString(config.data.isCompute2D()));
+            configFile.setProperty("Compute3D", Boolean.toString(config.data.isCompute3D()));
+            configFile.setProperty("ComputeFingerprints", Boolean.toString(config.data.isComputeFingerprints()));
+            configFile.setProperty("RemoveSalt", Boolean.toString(config.data.isRemoveSalt()));
+            configFile.setProperty("DetectAromaticity", Boolean.toString(config.data.isDetectAromaticity()));
+            configFile.setProperty("StandardizeTautomers", Boolean.toString(config.data.isStandardizeTautomers()));
+            configFile.setProperty("TautomerFile", config.data.getTautomerFile());
+            configFile.setProperty("StandardizeNitro", Boolean.toString(config.data.isStandardizeNitro()));
+            configFile.setProperty("Retain3D", Boolean.toString(config.data.isRetain3D()));
+            configFile.setProperty("Convert3D", config.data.getConvert3D());
+            configFile.setProperty("Log", Boolean.toString(config.data.isLog()));
+            configFile.setProperty("MaxThreads", Integer.toString(config.data.getMaxThreads()));
+            configFile.setProperty("MaxJobsWaiting", Integer.toString(config.data.getMaxJobsWaiting()));
+            configFile.setProperty("MaxRunTime", Long.toString(config.data.getMaxRunTime()));
+            configFile.setProperty("MaxCpdPerFile", Integer.toString(config.data.getMaxCpdPerFile()));
+            configFile.setProperty("RetainOrder", Boolean.toString(config.data.isRetainOrder()));
+            configFile.setProperty("UseFilenameAsMolName", Boolean.toString(config.data.isUseFilenameAsMolName()));
+
+            FileOutputStream fos = new FileOutputStream(filename);
+            configFile.store(fos, null);
+            fos.close();
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger("global").log(Level.FINE, "Cannot save configuration", ex);
+        }
+    }
+
+    /**
+     * Load descriptor types.
+     */
+    protected void LoadDescriptorTypes(String filename, boolean loadDefault)
+    {
+        Set<DescriptorStruct> descriptors = libPaDELDescriptorType.GetDescriptorTypes(filename);
+        if (descriptors==null && loadDefault)
+        {
+            descriptors = libPaDELDescriptorType.GetDescriptorTypes(this.getClass().getClassLoader().getResourceAsStream("META-INF/descriptors.xml"));
+        }
+        if (descriptors==null) return;
+        
+        Method setMethod = null;
+        Class params[] = { boolean.class };
+        for (DescriptorStruct descriptor : descriptors)
+        {
+            try
+            {
+                setMethod = descriptor2DConfig.data.getClass().getMethod("set" + descriptor.getName(), params);
+                if (setMethod!=null) 
+                {
+                    setMethod.invoke(descriptor2DConfig.data, new Object[]{descriptor.isActive()});
+                    descriptor2DConfig.sheet.readFromObject(descriptor2DConfig.data);
+                }
+            }
+            catch (Exception ex1)
+            {
+                try
+                {
+                    setMethod = descriptor3DConfig.data.getClass().getMethod("set" + descriptor.getName(), params);
+                    if (setMethod!=null) 
+                    {
+                        setMethod.invoke(descriptor3DConfig.data, new Object[]{descriptor.isActive()});
+                        descriptor3DConfig.sheet.readFromObject(descriptor3DConfig.data);
+                    }
+                }
+                catch (Exception ex2)
+                {
+                    try
+                    {
+                        setMethod = fingerprintConfig.data.getClass().getMethod("set" + descriptor.getName(), params);
+                        if (setMethod!=null)
+                        {
+                            setMethod.invoke(fingerprintConfig.data, new Object[]{descriptor.isActive()});
+                            fingerprintConfig.sheet.readFromObject(fingerprintConfig.data);
+                        }
+                    }
+                    catch (Exception ex3)
+                    {
+                        Logger.getLogger(PaDELDescriptorView.class.getName()).log(Level.SEVERE, "Cannot find descriptor type.", ex3);
+                    }
+                }
+            }            
+        }
+   }
+
+    /**
+     * Save descriptor types.
+     */
+    protected void SaveDescriptorTypes(String filename)
+    {
+        libPaDELDescriptorType.SaveDescriptorTypes(filename, GetDescriptors());
+    }
+
+    public Set<DescriptorStruct> GetDescriptors()
+    {
+        return GetDescriptors(descriptor2DConfig, descriptor3DConfig, fingerprintConfig);
+    }
+
+    public static Set<DescriptorStruct> GetDescriptors(PaDELDescriptorPropertySheetPage2 descriptor2DConfig,
+                                                       PaDELDescriptorPropertySheetPage3 descriptor3DConfig,
+                                                       PaDELDescriptorPropertySheetPage4 fingerprintConfig)
+    {
+        Set<DescriptorStruct> descriptors = new LinkedHashSet<DescriptorStruct>();
+
+        // 1D & 2D descriptors
+        descriptors.add(new DescriptorStruct("AcidicGroupCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isAcidicGroupCount()));
+        descriptors.add(new DescriptorStruct("ALOGP", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isALOGP()));
+        descriptors.add(new DescriptorStruct("AminoAcidCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isAminoAcidCount()));
+        descriptors.add(new DescriptorStruct("APol", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isAPol()));
+        descriptors.add(new DescriptorStruct("AromaticAtomsCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isAromaticAtomsCount()));
+        descriptors.add(new DescriptorStruct("AromaticBondsCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isAromaticBondsCount()));
+        descriptors.add(new DescriptorStruct("AtomCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isAtomCount()));
+        descriptors.add(new DescriptorStruct("Autocorrelation", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isAutocorrelation()));
+        descriptors.add(new DescriptorStruct("BaryszMatrix", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isBaryszMatrix()));
+        descriptors.add(new DescriptorStruct("BasicGroupCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isBasicGroupCount()));
+        descriptors.add(new DescriptorStruct("BCUT", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isBCUT()));
+        descriptors.add(new DescriptorStruct("BondCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isBondCount()));
+        descriptors.add(new DescriptorStruct("BPol", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isBPol()));
+        descriptors.add(new DescriptorStruct("BurdenModifiedEigenvalues", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isBurdenModifiedEigenvalues()));
+        descriptors.add(new DescriptorStruct("CarbonTypes", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isCarbonTypes()));
+        descriptors.add(new DescriptorStruct("ChiChain", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isChiChain()));
+        descriptors.add(new DescriptorStruct("ChiCluster", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isChiCluster()));
+        descriptors.add(new DescriptorStruct("ChiPathCluster", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isChiPathCluster()));
+        descriptors.add(new DescriptorStruct("ChiPath", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isChiPath()));
+        descriptors.add(new DescriptorStruct("Constitutional", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isConstitutional()));
+        descriptors.add(new DescriptorStruct("Crippen", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isCrippen()));
+        descriptors.add(new DescriptorStruct("DetourMatrix", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isDetourMatrix()));
+        descriptors.add(new DescriptorStruct("EccentricConnectivityIndex", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isEccentricConnectivityIndex()));
+        descriptors.add(new DescriptorStruct("EStateAtomType", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isEStateAtomType()));
+        descriptors.add(new DescriptorStruct("ExtendedTopochemicalAtom", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isExtendedTopochemicalAtom()));
+        descriptors.add(new DescriptorStruct("FMF", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isFMF()));
+        descriptors.add(new DescriptorStruct("FragmentComplexity", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isFragmentComplexity()));
+        descriptors.add(new DescriptorStruct("HBondAcceptorCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isHBondAcceptorCount()));
+        descriptors.add(new DescriptorStruct("HBondDonorCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isHBondDonorCount()));
+        descriptors.add(new DescriptorStruct("HybridizationRatio", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isHybridizationRatio()));
+        descriptors.add(new DescriptorStruct("InformationContent", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isInformationContent()));
+        descriptors.add(new DescriptorStruct("IPMolecularLearning", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isIPMolecularLearning()));
+        descriptors.add(new DescriptorStruct("KappaShapeIndices", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isKappaShapeIndices()));
+        descriptors.add(new DescriptorStruct("KierHallSmarts", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isKierHallSmarts()));
+        descriptors.add(new DescriptorStruct("LargestChain", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isLargestChain()));
+        descriptors.add(new DescriptorStruct("LargestPiSystem", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isLargestPiSystem()));
+        descriptors.add(new DescriptorStruct("LongestAliphaticChain", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isLongestAliphaticChain()));
+        descriptors.add(new DescriptorStruct("MannholdLogP", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isMannholdLogP()));
+        descriptors.add(new DescriptorStruct("McGowanVolume", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isMcGowanVolume()));
+        descriptors.add(new DescriptorStruct("MDE", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isMDE()));
+        descriptors.add(new DescriptorStruct("MLFER", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isMLFER()));
+        descriptors.add(new DescriptorStruct("PathCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isPathCount()));
+        descriptors.add(new DescriptorStruct("PetitjeanNumber", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isPetitjeanNumber()));
+        descriptors.add(new DescriptorStruct("RingCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isRingCount()));
+        descriptors.add(new DescriptorStruct("RotatableBondsCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isRotatableBondsCount()));
+        descriptors.add(new DescriptorStruct("RuleOfFive", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isRuleOfFive()));
+        descriptors.add(new DescriptorStruct("Topological", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isTopological()));
+        descriptors.add(new DescriptorStruct("TopologicalCharge", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isTopologicalCharge()));
+        descriptors.add(new DescriptorStruct("TopologicalDistanceMatrix", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isTopologicalDistanceMatrix()));
+        descriptors.add(new DescriptorStruct("TPSA", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isTPSA()));
+        descriptors.add(new DescriptorStruct("VABC", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isVABC()));
+        descriptors.add(new DescriptorStruct("VAdjMa", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isVAdjMa()));
+        descriptors.add(new DescriptorStruct("WalkCount", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isWalkCount()));
+        descriptors.add(new DescriptorStruct("Weight", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isWeight()));
+        descriptors.add(new DescriptorStruct("WeightedPath", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isWeightedPath()));
+        descriptors.add(new DescriptorStruct("WienerNumbers", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isWienerNumbers()));
+        descriptors.add(new DescriptorStruct("XLogP", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isXLogP()));
+        descriptors.add(new DescriptorStruct("ZagrebIndex", DescriptorStruct.TYPE_2D, descriptor2DConfig.data.isZagrebIndex()));
+
+        // 3D descriptors
+        descriptors.add(new DescriptorStruct("Autocorrelation3D", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isAutocorrelation3D()));
+        descriptors.add(new DescriptorStruct("CPSA", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isCPSA()));
+        descriptors.add(new DescriptorStruct("GravitationalIndex", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isGravitationalIndex()));
+        descriptors.add(new DescriptorStruct("LengthOverBreadth", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isLengthOverBreadth()));
+        descriptors.add(new DescriptorStruct("MomentOfInertia", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isMomentOfInertia()));
+        descriptors.add(new DescriptorStruct("PetitjeanShapeIndex", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isPetitjeanShapeIndex()));
+        descriptors.add(new DescriptorStruct("RDF", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isRDF()));
+        descriptors.add(new DescriptorStruct("WHIM", DescriptorStruct.TYPE_3D, descriptor3DConfig.data.isWHIM()));
+ 
+        // Fingerprints
+        descriptors.add(new DescriptorStruct("Fingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isFingerprinter()));
+        descriptors.add(new DescriptorStruct("ExtendedFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isExtendedFingerprinter()));
+        descriptors.add(new DescriptorStruct("EStateFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isEStateFingerprinter()));
+        descriptors.add(new DescriptorStruct("GraphOnlyFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isGraphOnlyFingerprinter()));
+        descriptors.add(new DescriptorStruct("MACCSFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isMACCSFingerprinter()));
+        descriptors.add(new DescriptorStruct("PubchemFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isPubchemFingerprinter()));
+        descriptors.add(new DescriptorStruct("SubstructureFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isSubstructureFingerprinter()));
+        descriptors.add(new DescriptorStruct("SubstructureFingerprintCount", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isSubstructureFingerprintCount()));
+        descriptors.add(new DescriptorStruct("KlekotaRothFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isKlekotaRothFingerprinter()));
+        descriptors.add(new DescriptorStruct("KlekotaRothFingerprintCount", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isKlekotaRothFingerprintCount()));
+        descriptors.add(new DescriptorStruct("AtomPairs2DFingerprinter", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isAtomPairs2DFingerprinter()));
+        descriptors.add(new DescriptorStruct("AtomPairs2DFingerprintCount", DescriptorStruct.TYPE_FINGERPRINT, fingerprintConfig.data.isAtomPairs2DFingerprintCount()));
+
+        return descriptors;
+    }
+
+    @Action
+    public void LoadConfig() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setDialogTitle("Select configuration file");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+            File f = new File(chooser.getSelectedFile().getAbsolutePath());
+            if (f.exists())
+            {
+                LoadConfiguration(chooser.getSelectedFile().getAbsolutePath());
+                JOptionPane.showMessageDialog(null, "Configuration loaded", "Loaded", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "File does not exists", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    @Action
+    public void SaveConfig() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setDialogTitle("Select configuration file");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+            File f = new File(chooser.getSelectedFile().getAbsolutePath());
+            if (f.exists())
+            {
+                int selection = JOptionPane.showConfirmDialog(null, "File exists. Overwrite file?", "File exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (selection == JOptionPane.YES_OPTION)
+                {
+                    SaveConfiguration(chooser.getSelectedFile().getAbsolutePath());
+                }
+            }
+            else
+            {
+                SaveConfiguration(chooser.getSelectedFile().getAbsolutePath());
+            }
+        }
+    }
+
+    @Action
+    public void BrowseDescriptorTypes()
+    {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setDialogTitle("Select descriptor type file");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("XML file", "xml"));
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+            File f = new File(chooser.getSelectedFile().getAbsolutePath());
+            if (f.exists())
+            {
+                LoadDescriptorTypes(chooser.getSelectedFile().getAbsolutePath(), false);
+                JOptionPane.showMessageDialog(null, "New descriptor types loaded", "Loaded", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "File does not exists", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    @Action
+    public void SaveDescriptorTypes() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setDialogTitle("Select configuration file");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("XML file", "xml"));
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+            String newFile = chooser.getSelectedFile().getAbsolutePath();
+            if (!newFile.endsWith(".xml"))
+            {
+                newFile += ".xml";
+            }
+            File f = new File(newFile);
+            if (f.exists())
+            {
+                int selection = JOptionPane.showConfirmDialog(null, "File exists. Overwrite file?", "File exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (selection == JOptionPane.YES_OPTION)
+                {
+                    SaveDescriptorTypes(newFile);
+                }
+            }
+            else
+            {
+                SaveDescriptorTypes(newFile);
+            }
+        }
+    }
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem LoadConfig;
+    private javax.swing.JMenuItem SaveConfig;
+    public padeldescriptor.PaDELDescriptorPropertySheetPage1 config;
+    public padeldescriptor.PaDELDescriptorPropertySheetPage2 descriptor2DConfig;
+    public padeldescriptor.PaDELDescriptorPropertySheetPage3 descriptor3DConfig;
+    public padeldescriptor.PaDELDescriptorPropertySheetPage4 fingerprintConfig;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JMenuItem loadDescriptors;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JMenuBar menuBar;
+    public javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem saveDescriptors;
+    public javax.swing.JButton start;
+    public javax.swing.JLabel status;
+    private javax.swing.JLabel statusAnimationLabel;
+    private javax.swing.JLabel statusMessageLabel;
+    private javax.swing.JPanel statusPanel;
+    // End of variables declaration//GEN-END:variables
+
+    private final Timer messageTimer;
+    private final Timer busyIconTimer;
+    private final Icon idleIcon;
+    private final Icon[] busyIcons = new Icon[15];
+    private int busyIconIndex = 0;
+    public String descriptorTypeFile = null;
+
+    private JDialog aboutBox;
+}
