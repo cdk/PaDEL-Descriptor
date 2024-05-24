@@ -60,7 +60,7 @@ import org.openscience.cdk.annotations.TestMethod;
 * int[] alt = paths[1];
 * </pre></blockquote>
 *
-* <p/> If shortest paths from multiple start atoms are required {@link
+* If shortest paths from multiple start atoms are required {@code
 * AllPairsShortestPaths} will have a small performance advantage. Please use
 * {@link org.openscience.cdk.graph.matrix.TopologicalMatrix} if only the
 * shortest distances between atoms is required.
@@ -68,7 +68,7 @@ import org.openscience.cdk.annotations.TestMethod;
 * @author John May
 * @cdk.module core
 * @cdk.githash
-* @see AllPairsShortestPaths
+* @code AllPairsShortestPaths
 * @see org.openscience.cdk.graph.matrix.TopologicalMatrix
 */
 public final class ShortestPaths {
@@ -97,13 +97,13 @@ public final class ShortestPaths {
 
     /**
 * Create a new shortest paths tool for a single start atom. If shortest
-* paths from multiple start atoms are required {@link
+* paths from multiple start atoms are required {@code
 * AllPairsShortestPaths} will have a small performance advantage.
 *
 * @param container an atom container to find the paths of
 * @param start the start atom to which all shortest paths will be
 * computed
-* @see AllPairsShortestPaths
+* @code AllPairsShortestPaths
 */
     @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
     public ShortestPaths(IAtomContainer container, IAtom start) {

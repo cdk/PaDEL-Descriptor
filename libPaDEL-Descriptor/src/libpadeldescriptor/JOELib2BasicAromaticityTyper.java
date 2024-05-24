@@ -48,10 +48,10 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 /**
  *  Aromatic typer.
  * The definition file can be defined in the
- * <tt>joelib2.data.JOEAromaticTyper.resourceFile</tt> property in the {@link wsi.ra.tool.BasicPropertyHolder}.
- * The {@link wsi.ra.tool.BasicResourceLoader} loads the <tt>joelib2.properties</tt> file for default.
+ * <code>joelib2.data.JOEAromaticTyper.resourceFile</code> property in the {@code wsi.ra.tool.BasicPropertyHolder}.
+ * The {@code wsi.ra.tool.BasicResourceLoader} loads the <code>joelib2.properties</code> file for default.
  *
- * <p>
+ * 
  * Default:<br>
  * joelib2.data.JOEAromaticTyper.resourceFile=<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/joelib/joelib/src/joelib2/data/plain/aromatic.txt?rev=HEAD&content-type=text/vnd.viewcvs-markup">joelib2/data/plain/aromatic.txt</a>
  *
@@ -61,8 +61,8 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * @.wikipedia Molecule
  * @.license GPL
  * @.cvsversion    $Revision: 1.7 $, $Date: 2005/03/03 07:13:36 $
- * @see wsi.ra.tool.BasicPropertyHolder
- * @see wsi.ra.tool.BasicResourceLoader
+ * @code wsi.ra.tool.BasicPropertyHolder
+ * @code wsi.ra.tool.BasicResourceLoader
  */
 public class JOELib2BasicAromaticityTyper 
 {

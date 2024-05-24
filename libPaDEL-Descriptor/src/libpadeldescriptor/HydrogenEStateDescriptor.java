@@ -26,6 +26,7 @@ package libpadeldescriptor;
 
 
 
+import java.io.IOException;
 import java.util.Iterator;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -45,8 +46,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  There must not be any implicit hydrogens for all the atoms.<p>
  *
  *  This descriptor uses these parameters:
- *  <tableborder="1">
- *
+ *  <table border="1">
+ *  <caption>Table Caption</caption>
  *    <tr>
  *
  *      <td>
