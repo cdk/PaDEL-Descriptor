@@ -39,32 +39,31 @@ import java.util.List;
 
 /**
  * Evaluates the weighted path descriptors.
- * <p/>
+ * 
  * These decsriptors were described  by Randic ({@cdk.cite RAN84}) and characterize molecular
  * branching. Five descriptors are calculated, based on the implementation in the ADAPT
  * software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
  * atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
  * The class returns a <code>DoubleArrayResult</code> containing the five
  * descriptors in the order described below.
- * <p/>
- * <center>
+ * 
  * <table border=1>
- * <caption><a name="dmwp">DMWP</a></caption>
+ * <caption>DMWP</caption>
  * <tr>
  * <td>WTPT1</td><td>molecular ID</td></tr><tr>
  * <td>WTPT2</td><td> molecular ID / number of atoms</td></tr><tr>
  * <td>WTPT3</td><td> sum of path lengths starting
  * from heteroatoms</td></tr><tr>
- * <p/>
+ * 
  * <td>WTPT4</td><td> sum of path lengths starting
  * from oxygens</td></tr><tr>
  * <td>WTPT5</td><td> sum of path lengths starting
  * from nitrogens</td></tr>
  * </table>
- * </center>
  * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
+ * <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

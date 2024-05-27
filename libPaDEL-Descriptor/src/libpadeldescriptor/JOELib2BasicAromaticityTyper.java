@@ -55,14 +55,12 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * Default:<br>
  * joelib2.data.JOEAromaticTyper.resourceFile=<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/joelib/joelib/src/joelib2/data/plain/aromatic.txt?rev=HEAD&content-type=text/vnd.viewcvs-markup">joelib2/data/plain/aromatic.txt</a>
  *
- * @.author     wegnerj
- * @.wikipedia Aromaticity
- * @.wikipedia Friedrich August Kekulé von Stradonitz
- * @.wikipedia Molecule
- * @.license GPL
- * @.cvsversion    $Revision: 1.7 $, $Date: 2005/03/03 07:13:36 $
- * @code wsi.ra.tool.BasicPropertyHolder
- * @code wsi.ra.tool.BasicResourceLoader
+ * @author     wegnerj
+ * wikipedia page Aromaticity
+ * wikipedia page Friedrich August Kekulé von Stradonitz
+ * wikipedia page Molecule
+ * license GPL
+ * cvsversion    $Revision: 1.7 $, $Date: 2005/03/03 07:13:36 $
  */
 public class JOELib2BasicAromaticityTyper 
 {

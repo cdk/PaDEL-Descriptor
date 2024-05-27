@@ -44,46 +44,37 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * CDK
  * Slightly simplified version of the <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
  * The following groups are counted as hydrogen bond acceptors:
- * <ul>
- * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
- * <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
- * <li>an oxygen that is adjacent to a nitrogen</li>
- * </ol>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
- * <li>a nitrogen that is adjacent to an oxygen</li>
- * </ol>
- * </ul>
+ * 
+ * - Any oxygen with a non-positive formal charge (i.e., formal charge &le; 0), except for:
+ *   - An aromatic ether oxygen (adjacent to at least one aromatic carbon).
+ *   - An oxygen adjacent to a nitrogen.
+ *
+ * - Any nitrogen with a non-positive formal charge (i.e., formal charge &le; 0), except for:
+ *   - A nitrogen that is adjacent to an oxygen.
  *
  * nHBAcc2
  * The following groups are counted as hydrogen bond acceptors:
- * <ul>
- * <li>any oxygen</li>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
- * <li>a non-aromatic nitrogen that is adjacent to an oxygen and aromatic ring</li>
- * <li>an aromatic nitrogen with a hydrogen atom in a ring</li>
- * <li>an aromatic nitrogen with 3 neighouring atoms in a ring</li>
- * <li>a nitrogen with total bond order >=4</li>
- * </ol>
- * <li>any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)</li>
- * </ul>
  *
+ * - Any oxygen.
+ * - Any nitrogen where the formal charge of the nitrogen is non-positive (i.e., formal charge ≤ 0), except for:
+ *   - A non-aromatic nitrogen that is adjacent to an oxygen and an aromatic ring.
+ *   - An aromatic nitrogen with a hydrogen atom in a ring.
+ *   - An aromatic nitrogen with three neighboring atoms in a ring.
+ *   - A nitrogen with a total bond order ≥ 4.
+ * - Any fluorine where the formal charge of the fluorine is non-positive (i.e., formal charge ≤ 0).
+ *
+ * 
  * nHBAcc3
  * The following groups are counted as hydrogen bond acceptors:
- * <ul>
- * <li>any oxygen</li>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
- * <li>a non-aromatic nitrogen that is adjacent to an oxygen and aromatic ring</li>
- * <li>an aromatic nitrogen with a hydrogen atom in a ring</li>
- * <li>an aromatic nitrogen with 3 neighouring atoms in a ring</li>
- * <li>a nitrogen with total bond order >=4</li>
- * <li>a nitrogen in an amide bond</li>
- * </ol>
- * <li>any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)</li>
- * </ul>
+ *
+ * - Any oxygen.
+ * - Any nitrogen where the formal charge of the nitrogen is non-positive (i.e., formal charge ≤ 0), except for:
+ *   - A non-aromatic nitrogen that is adjacent to an oxygen and an aromatic ring.
+ *   - An aromatic nitrogen with a hydrogen atom in a ring.
+ *   - An aromatic nitrogen with three neighboring atoms in a ring.
+ *   - A nitrogen with a total bond order ≥ 4.
+ *   - A nitrogen in an amide bond.
+ * - Any fluorine where the formal charge of the fluorine is non-positive (i.e., formal charge ≤ 0).
  *
  * Lipinski
  * Lipinski CA, Lombardo F, Dominy BW, Feeney PJ: Experimental and computational approaches to estimate solubility and permeability in drug discovery and development settings. Adv Drug Deliv Rev 1997, 23:3-25.
@@ -103,6 +94,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * <p>This descriptor uses these parameters:
  * <table>
+ *  <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
