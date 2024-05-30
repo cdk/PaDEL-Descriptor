@@ -45,8 +45,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  There must not be any implicit hydrogens for all the atoms.<p>
  *
  *  This descriptor uses these parameters:
- *  <tableborder="1">
- *
+ *  <table border="1">
+ *  <caption>Table Caption</caption>
  *    <tr>
  *
  *      <td>
@@ -82,11 +82,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  </table>
  *
  *
- *@author         yapchunwei
- *@cdk.created    2008-06-10
- *@cdk.module     qsaratomic
+ * @author         yapchunwei
+ * @cdk.created    2008-06-10
+ * @cdk.module     qsaratomic
  * @cdk.svnrev  $Revision: 1 $
- *@cdk.set        qsar-descriptors
+ * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierHallElectronegativity
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.kierHallElectronegativityDescriptorTest")

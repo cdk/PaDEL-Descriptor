@@ -78,9 +78,9 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.githash
  *
  * @author      Edgar Luttmann
- * @author      Bradley Smith <bradley@baysmith.com>
- * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
- * @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
+ * @author      Bradley Smith {@code <bradley@baysmith.com>}
+ * @author      Martin Eklund {@code <martin.eklund@farmbio.uu.se>}
+ * @author      Ola Spjuth {@code <ola.spjuth@farmbio.uu.se>}
  * @cdk.created 2001-08-06
  * @cdk.keyword file format, PDB
  * @cdk.bug     1714141

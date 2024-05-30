@@ -50,6 +50,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
+ * <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

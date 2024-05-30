@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Topological charge indices
- * <p/>
+ * 
  *
  * @author Yap Chun Wei
  * @cdk.created 2014-06-09

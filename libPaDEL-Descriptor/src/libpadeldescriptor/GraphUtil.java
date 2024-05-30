@@ -42,7 +42,7 @@ import static java.util.Arrays.copyOf;
 * @cdk.module core
 * @cdk.githash
 * @see ShortestPaths
-* @see org.openscience.cdk.ringsearch.RingSearch
+* {@code org.openscience.cdk.ringsearch.RingSearch}
 */
 @TestClass("org.openscience.cdk.graph.GraphUtilTest")
 public class GraphUtil {
@@ -224,7 +224,7 @@ public class GraphUtil {
 * same)
 * @throws IllegalArgumentException thrown if the vertices do not form a
 * cycle
-* @see org.openscience.cdk.ringsearch.RingSearch#isolated()
+* {@code org.openscience.cdk.ringsearch.RingSearch#isolated()}
 */
     @TestMethod("testCycle,testAcyclic,testAcyclic2")
     public static int[] cycle(int[][] graph, int[] vertices) {

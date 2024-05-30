@@ -41,11 +41,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Topological radius, topological diameter and topological shape (Petitjean shape)
- * <p/>
+ * 
  * The code calculates the topological radius, topological diameter and topological shape.
- * <p/>
+ * 
  * The value returned is topoRadius, topoDiameter, topoShape.
- * <p/>
+ * 
  *
  * @author Yap Chun Wei
  * @cdk.created 2013-05-31

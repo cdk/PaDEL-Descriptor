@@ -34,7 +34,7 @@ import org.openscience.cdk.annotations.TestMethod;
 * connected atom. The number of shortest paths ({@link #nPathsTo(int)}) and the
 * distance ({@link #distanceTo(int)}) can be accessed before reconstructing all
 * the paths. When no path is found (i.e. not-connected) an empty path is always
-* returned. <p/>
+* returned.
 *
 * <blockquote><pre>
 * IAtomContainer benzene = MoleculeFactory.makeBenzene();
@@ -60,15 +60,15 @@ import org.openscience.cdk.annotations.TestMethod;
 * int[] alt = paths[1];
 * </pre></blockquote>
 *
-* <p/> If shortest paths from multiple start atoms are required {@link
+* If shortest paths from multiple start atoms are required {@code
 * AllPairsShortestPaths} will have a small performance advantage. Please use
-* {@link org.openscience.cdk.graph.matrix.TopologicalMatrix} if only the
+* {@code org.openscience.cdk.graph.matrix.TopologicalMatrix} if only the
 * shortest distances between atoms is required.
 *
 * @author John May
 * @cdk.module core
 * @cdk.githash
-* @see AllPairsShortestPaths
+* {@code AllPairsShortestPaths}
 * @see org.openscience.cdk.graph.matrix.TopologicalMatrix
 */
 public final class ShortestPaths {

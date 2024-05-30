@@ -38,11 +38,11 @@ import javax.vecmath.Point3d;
 
 /**
  * Evaluates the Petitjean shape indices,
- * <p/>
+ * 
  * These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
  * and considered the molecular graph. This class also implements the geometric analog
  * of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
- * <p/>
+ * 
  * The descriptor returns a <code>DoubleArrayResult</code> which contains
  * <ol>
  * <li>topoShape - topological shape index
@@ -51,6 +51,7 @@ import javax.vecmath.Point3d;
  * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
+ * <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

@@ -103,6 +103,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * <p>This descriptor uses these parameters:
  * <table>
+ * <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>

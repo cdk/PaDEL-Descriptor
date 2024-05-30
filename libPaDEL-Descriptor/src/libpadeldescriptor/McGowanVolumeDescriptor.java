@@ -42,12 +42,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * McGowan characteristic volume
- * <p/>
+ * 
  * The code currently computes the McGowan characteristic volume. 
  * Abraham MH, McGowan JC. The use of characteristic volumes to measure cavity terms in reversed phase liquid chromatography. Chromatographia. 1987;23:243-6.
- * <p/>
+ * 
  * The value returned is McGowan_V
- * <p/>
+ * 
  *
  * @author Yap Chun Wei
  * @cdk.created 2008-07-07
