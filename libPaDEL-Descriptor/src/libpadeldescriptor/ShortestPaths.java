@@ -97,13 +97,13 @@ public final class ShortestPaths {
 
     /**
 * Create a new shortest paths tool for a single start atom. If shortest
-* paths from multiple start atoms are required {@link
+* paths from multiple start atoms are required {@code
 * AllPairsShortestPaths} will have a small performance advantage.
 *
 * @param container an atom container to find the paths of
 * @param start the start atom to which all shortest paths will be
 * computed
-* @see AllPairsShortestPaths
+* {@code AllPairsShortestPaths}
 */
     @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
     public ShortestPaths(IAtomContainer container, IAtom start) {
@@ -323,7 +323,7 @@ public final class ShortestPaths {
 * order. When there is no path an empty array is returned. It is considered
 * there to be no path if the end atom belongs to the same container but is
 * a member of a different fragment, or the atom is not present in the
-* container at all.<p/>
+* container at all.
 *
 * <pre>
 * ShortestPaths sp = ...;
@@ -373,7 +373,7 @@ public final class ShortestPaths {
 * size arrays of vertex indices. When there is no path an empty array is
 * returned. It is considered there to be no path if the end vertex belongs
 * to the same container but is a member of a different fragment, or the
-* vertex is not present in the container at all.<p/>
+* vertex is not present in the container at all.
 *
 * <b>Important:</b> for every possible branch the number of possible paths
 * doubles and could be in the order of tens of thousands. Although the
@@ -416,7 +416,7 @@ public final class ShortestPaths {
 * size arrays of vertex indices. When there is no path an empty array is
 * returned. It is considered there to be no path if the end vertex belongs
 * to the same container but is a member of a different fragment, or the
-* vertex is not present in the container at all. <p/>
+* vertex is not present in the container at all.
 *
 * <b>Important:</b> for every possible branch the number of possible paths
 * doubles and could be in the order of tens of thousands. Although the
@@ -535,7 +535,7 @@ public final class ShortestPaths {
 * Access the number of possible paths to the <i>end</i> vertex. When there
 * is no path 0 is returned. It is considered there to be no path if the end
 * vertex belongs to the same container but is a member of a different
-* fragment, or the vertex is not present in the container at all.<p/>
+* fragment, or the vertex is not present in the container at all.
 *
 * <pre>
 * ShortestPaths sp = ...;
@@ -562,7 +562,7 @@ public final class ShortestPaths {
 * Access the number of possible paths to the <i>end</i> atom. When there is
 * no path 0 is returned. It is considered there to be no path if the end
 * atom belongs to the same container but is a member of a different
-* fragment, or the atom is not present in the container at all.<p/>
+* fragment, or the atom is not present in the container at all.
 *
 * <pre>
 * ShortestPaths sp = ...;

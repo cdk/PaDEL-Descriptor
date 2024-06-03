@@ -25,7 +25,7 @@
 package libpadeldescriptor;
 
 
-
+import java.io.IOException;
 import java.util.Iterator;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -85,7 +85,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@author         yapchunwei
  *@cdk.created    2008-06-10
  *@cdk.module     qsaratomic
- * @cdk.svnrev  $Revision: 1 $
+ *@cdk.svnrev  $Revision: 1 $
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:hydrogenEStateDescriptor
  */

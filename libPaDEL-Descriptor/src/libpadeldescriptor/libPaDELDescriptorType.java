@@ -570,7 +570,6 @@ public class libPaDELDescriptorType
      *
      * @param file                  XML file to save descriptor types.
      * @param descriptors           oSet containing descriptor types information.
-     * @return                      Names of descriptors.
      */
     public static void SaveDescriptorTypes(String file, Set<DescriptorStruct> descriptors)
     {
@@ -590,7 +589,6 @@ public class libPaDELDescriptorType
      *
      * @param out                   output stream containing list of descriptors to calculate.
      * @param descriptors           oSet containing descriptor types information.
-     * @return                      Names of descriptors.
      */
     public static void SaveDescriptorTypes(OutputStream out, Set<DescriptorStruct> descriptors)
     {
