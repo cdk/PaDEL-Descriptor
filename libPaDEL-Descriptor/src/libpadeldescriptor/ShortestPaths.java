@@ -389,7 +389,7 @@ public final class ShortestPaths {
 * int[][] paths = sp.pathsTo(5);
 *
 * // only reconstruct shortest paths below a threshold
-* if(sp.nPathsTo(5) < threshold){
+* if(sp.nPathsTo(5) {@literal <} threshold){
 * int[][] path = sp.pathsTo(5); // reconstruct shortest paths
 * }
 * </pre>
@@ -433,7 +433,7 @@ public final class ShortestPaths {
 * int[][] paths = sp.pathsTo(end);
 *
 * // only reconstruct shortest paths below a threshold
-* if(sp.nPathsTo(end) < threshold){
+* if(sp.nPathsTo(end) {@literal <} threshold){
 * int[][] path = sp.pathsTo(end); // reconstruct shortest paths
 * }
 * </pre>
@@ -599,7 +599,7 @@ public final class ShortestPaths {
 *
 * int n = container.getAtomCount();
 *
-* if(sp.distanceTo(5) < n) {
+* if(sp.distanceTo(5) {@literal <} n) {
 * // these is a path from 0 to 5
 * }
 * </pre>
@@ -645,7 +645,7 @@ public final class ShortestPaths {
 *
 * int n = container.getAtomCount();
 *
-* if( sp.distanceTo(end) < n ) {
+* if( sp.distanceTo(end) {@literal <} n ) {
 * // these is a path from start to end
 * }
 *

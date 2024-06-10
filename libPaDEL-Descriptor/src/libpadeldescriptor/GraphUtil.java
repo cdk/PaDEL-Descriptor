@@ -162,7 +162,7 @@ public class GraphUtil {
 *
 * int[][] h = subgraph(g, vs);
 * // for the vertices in h, the provided 'vs' gives the original index
-* for(int v = 0; v < h.length; v++) {
+* for(int v = 0; v {@literal <} h.length; v++) {
 * // vs[v] is 'v' in 'g'
 * }
 * </pre></blockquote>

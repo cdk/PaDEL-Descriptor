@@ -46,7 +46,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *  is specified, the returned value is the molecular weight.
  *  If an invalid element symbol is specified, the return value is
  *  0 and no exception is thrown
- *  <p>
+ *  
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
