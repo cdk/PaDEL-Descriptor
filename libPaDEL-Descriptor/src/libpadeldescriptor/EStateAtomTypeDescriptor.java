@@ -541,7 +541,6 @@ public class EStateAtomTypeDescriptor implements IMolecularDescriptor {
      * 
      * @param container AtomContainer
      * @return
-     * @throws org.openscience.cdk.exception.CDKException
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {

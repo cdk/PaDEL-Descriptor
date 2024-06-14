@@ -174,7 +174,6 @@ public class KierHallElectronegativityDescriptor implements IAtomicDescriptor {
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
 	 *@return                   a double with Kier and Hall electronegativity of the heavy atom
-	 *@exception  CDKException  if the atomic number or period cannot be found for any atom in the supplied AtomContainer
 	 */
     @TestMethod(value="testCalculate_IAtomContainer")
     @Override
