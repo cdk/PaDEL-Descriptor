@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Arrays;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
 * Find and reconstruct the shortest paths from a given start atom to any other
@@ -105,7 +104,6 @@ public final class ShortestPaths {
 * computed
 * {@code AllPairsShortestPaths}
 */
-    @TestMethod("testConstructor_Container_Empty,testConstructor_Container_Null,testConstructor_Container_MissingAtom")
     public ShortestPaths(IAtomContainer container, IAtom start) {
         this(GraphUtil.toAdjList(container), container, container
                 .getAtomNumber(start));
@@ -302,10 +300,7 @@ public final class ShortestPaths {
 * @see #atomsTo(int)
 * @see #atomsTo(org.openscience.cdk.interfaces.IAtom)
 */
-    @TestMethod("testPathTo_Int_Simple,testPathTo_Int_Benzene,testPathTo_Int_Norbornane," +
-                        "testPathTo_Int_Spiroundecane,testPathTo_Int_Pentadecaspiro," +
-                        "testPathTo_Int_OutOfBoundsIndex,testPathTo_Int_NegativeIndex," +
-                        "testPathTo_Int_Disconnected")
+
     public int[] pathTo(int end) {
 
         if (end < 0 || end >= routeTo.length)
@@ -344,10 +339,7 @@ public final class ShortestPaths {
 * @see #atomsTo(int)
 * @see #pathTo(int)
 */
-    @TestMethod("testPathTo_Atom_Simple,testPathTo_Atom_Benzene,testPathTo_Atom_Norbornane," +
-                        "testPathTo_Atom_Spiroundecane,testPathTo_Atom_Pentadecaspiro," +
-                        "testPathTo_Atom_MissingAtom,testPathTo_Atom_Null," +
-                        "testPathTo_Atom_Disconnected")
+
     public int[] pathTo(IAtom end) {
         return pathTo(container.getAtomNumber(end));
     }
@@ -362,7 +354,6 @@ public final class ShortestPaths {
 * @return whether the path to the <i>end</i> only passed through vertices
 * preceding the <i>start</i>
 */
-    @TestMethod("testIsPrecedingPathTo_OutOfBounds,testIsPrecedingPathTo")
     public boolean isPrecedingPathTo(int end) {
         return (end >= 0 || end < routeTo.length) && precedes[end];
     }
@@ -397,9 +388,7 @@ public final class ShortestPaths {
 * @param end the end vertex
 * @return all shortest paths from the start to the end vertex
 */
-    @TestMethod("testPathsTo_Int_Simple,testPathsTo_Int_Benzene,testPathsTo_Int_Spiroundecane," +
-                        "testPathsTo_Int_Norbornane,testPathsTo_Int_OutOfBoundsIndex," +
-                        "testPathsTo_Int_NegativeIndex,testPathsTo_Int_Disconnected")
+
     public int[][] pathsTo(int end) {
 
         if (end < 0 || end >= routeTo.length)
@@ -441,10 +430,7 @@ public final class ShortestPaths {
 * @param end the end atom
 * @return all shortest paths from the start to the end vertex
 */
-    @TestMethod("testPathsTo_Atom_Simple,testPathsTo_Atom_Benzene,testPathsTo_Atom_Spiroundecane," +
-                        "testPathsTo_Atom_Norbornane,testPathsTo_Atom_Pentadecaspiro," +
-                        "testPathsTo_Atom_MissingAtom,testPathsTo_Atom_Null," +
-                        "testPathsTo_Atom_Disconnected")
+
     public int[][] pathsTo(IAtom end) {
         return pathsTo(container.getAtomNumber(end));
     }
@@ -478,8 +464,7 @@ public final class ShortestPaths {
 * @see #pathTo(int)
 * @see #pathTo(org.openscience.cdk.interfaces.IAtom)
 */
-    @TestMethod("testAtomsTo_Int_Simple,testAtomsTo_Int_Benzene,testAtomsTo_Int_Disconnected," +
-                        "testAtomsTo_Int_OutOfBoundsIndex,testAtomsTo_Int_NegativeIndex")
+
     public IAtom[] atomsTo(int end) {
 
         int[] path = pathTo(end);
@@ -524,8 +509,7 @@ public final class ShortestPaths {
 * @see #pathTo(int)
 * @see #pathTo(org.openscience.cdk.interfaces.IAtom)
 */
-    @TestMethod("testAtomsTo_Atom_Simple,testAtomsTo_Atom_Benzene,testAtomsTo_Atom_Disconnected," +
-                        "testAtomsTo_Atom_MissingAtom,testAtomsTo_Atom_Null")
+
     public IAtom[] atomsTo(IAtom end) {
         return atomsTo(container.getAtomNumber(end));
     }
@@ -549,10 +533,7 @@ public final class ShortestPaths {
 * returned
 * @return the number of paths to the end vertex
 */
-    @TestMethod("testNPathsTo_Int_Simple,testNPathsTo_Int_Benzene,testNPathsTo_Int_Norbornane," +
-                        "testNPathsTo_Int_Spiroundecane,testNPathsTo_Int_Pentadecaspiro," +
-                        "testNPathsTo_Int_Disconnected," +
-                        "testNPathsTo_Int_OutOfBoundIndex,testNPathsTo_Int_NegativeIndex")
+
     public int nPathsTo(int end) {
         return (end < 0 || end >= nPathsTo.length) ? 0 : nPathsTo[end];
     }
@@ -578,10 +559,6 @@ public final class ShortestPaths {
 * returned
 * @return the number of paths to the end vertex
 */
-    @TestMethod("testNPathsTo_Atom_Simple,testNPathsTo_Atom_Benzene,testNPathsTo_Atom_Norbornane," +
-                        "testNPathsTo_Atom_Spiroundecane,testNPathsTo_Atom_Pentadecaspiro," +
-                        "testNPathsTo_Atom_Disconnected," +
-                        "testNPathsTo_Atom_MissingAtom,testNPathsTo_Atom_Null")
     public int nPathsTo(IAtom end) {
         return nPathsTo(container.getAtomNumber(end));
     }
@@ -622,10 +599,7 @@ public final class ShortestPaths {
 * @return distance to this vertex
 * @see #distanceTo(org.openscience.cdk.interfaces.IAtom)
 */
-    @TestMethod("testDistanceTo_Int_Simple,testDistanceTo_Int_OutOfBoundIndex," +
-                        "testDistanceTo_Int_NegativeIndex,testDistanceTo_Int_Disconnected," +
-                        "testDistanceTo_Int_Benzene,testDistanceTo_Int_Spiroundecane," +
-                        "testDistanceTo_Int_Pentadecaspiro")
+
     public int distanceTo(int end) {
         return (end < 0 || end >= nPathsTo.length) ? Integer.MAX_VALUE
                                                    : distTo[end];
@@ -668,9 +642,7 @@ public final class ShortestPaths {
 * @return distance to the given atom
 * @see #distanceTo(int)
 */
-    @TestMethod("testDistanceTo_Atom_Simple,testDistanceTo_Atom_MissingAtom,testDistanceTo_Atom_Null," +
-                        "testDistanceTo_Atom_Disconnected,testDistanceTo_Atom_Benzene," +
-                        "testDistanceTo_Atom_Spiroundecane,testDistanceTo_Atom_Pentadecaspiro")
+
     public int distanceTo(IAtom end) {
         return distanceTo(container.getAtomNumber(end));
     }

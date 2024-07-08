@@ -21,7 +21,6 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -72,7 +71,6 @@ public class PaDELFragmentComplexityDescriptor implements IMolecularDescriptor {
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
@@ -91,7 +89,6 @@ public class PaDELFragmentComplexityDescriptor implements IMolecularDescriptor {
      * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 0) {
             throw new CDKException("FragmentComplexityDescriptor expects no parameter");
@@ -105,13 +102,11 @@ public class PaDELFragmentComplexityDescriptor implements IMolecularDescriptor {
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
         // return the parameters as used for the descriptor calculation
     }
 
-    @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }    
@@ -123,7 +118,6 @@ public class PaDELFragmentComplexityDescriptor implements IMolecularDescriptor {
      *@return                   the complexity
      *@see #setParameters
      */
-    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         //System.out.println("FragmentComplexityDescriptor");
         IAtomContainer molecule = AtomContainerManipulator.removeHydrogens(container);
@@ -153,7 +147,6 @@ public class PaDELFragmentComplexityDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }
@@ -164,7 +157,6 @@ public class PaDELFragmentComplexityDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return null;
     }
@@ -177,7 +169,6 @@ public class PaDELFragmentComplexityDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
        return null;
     }

@@ -22,7 +22,6 @@ package libpadeldescriptor;
 
 import java.util.List;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtom;
@@ -106,7 +105,6 @@ public class ExtendedTopochemicalAtomDescriptor implements IMolecularDescriptor 
      *
      *@return    The specification value
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -173,7 +171,6 @@ public class ExtendedTopochemicalAtomDescriptor implements IMolecularDescriptor 
      *@param  container  AtomContainer
      *@return            Extended Topochemical Atom (ETA) descriptors.
      */
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
 

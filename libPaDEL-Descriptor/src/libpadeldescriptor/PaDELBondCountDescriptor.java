@@ -22,7 +22,6 @@ package libpadeldescriptor;
 
 import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -66,7 +65,6 @@ public class PaDELBondCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The specification value
      */
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "PaDELBondCountDescriptor",
@@ -126,7 +124,6 @@ public class PaDELBondCountDescriptor implements IMolecularDescriptor {
      *@param  container  AtomContainer
      *@return            The number of bonds of a certain type.
      */
-    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
 
         int nBonds = 0;

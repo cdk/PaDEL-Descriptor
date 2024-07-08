@@ -21,7 +21,6 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -79,17 +78,14 @@ public class PaDELHINReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return HINFormat.getInstance();
     }
 
-    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }
 
-    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -98,12 +94,10 @@ public class PaDELHINReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
         for (Class anInterface : interfaces) {

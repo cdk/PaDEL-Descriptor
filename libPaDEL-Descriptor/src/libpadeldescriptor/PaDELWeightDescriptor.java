@@ -25,8 +25,6 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -73,7 +71,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:weight
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptorTest")
 public class PaDELWeightDescriptor implements IMolecularDescriptor {
 
     private String elementName = "*";
@@ -97,7 +94,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
@@ -114,7 +110,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
      *is not of type String
      *@see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("weight only expects one parameter");
@@ -133,7 +128,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -141,7 +135,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
         String name = "w";
         if (elementName.equals("*"))
@@ -166,7 +159,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
      * is specified as the element symbol make sure that the AtomContainer has hydrogens.
      *@return The total weight of atoms of the specified element type
      */
-    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
         if (elementName.equals("*")) {
@@ -236,7 +228,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {       
         if (elementName.equals("*")) return new DoubleArrayResultType(2);
         else return new DoubleResult(0.0);
@@ -248,7 +239,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "elementSymbol";
@@ -262,7 +252,6 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       An Object whose class is that of the parameter requested
      */
-    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return "";
     }

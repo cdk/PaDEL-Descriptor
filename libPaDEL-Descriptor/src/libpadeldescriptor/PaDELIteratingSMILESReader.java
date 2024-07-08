@@ -36,8 +36,6 @@ import java.util.NoSuchElementException;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -66,7 +64,6 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.keyword    file format, SMILES
  */
-@TestClass("org.openscience.cdk.io.iterator.IteratingSMILESReaderTest")
 public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader {
 
     private BufferedReader input;
@@ -77,8 +74,7 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
     
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
-    private IMolecule nextMolecule;
-    
+    private IMolecule nextMolecule;    
     /**
      * Constructs a new PaDELIteratingSMILESReader that can read Molecule from a given Reader.
      *
@@ -87,7 +83,6 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
      * @see org.openscience.cdk.DefaultChemObjectBuilder
      * @see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder
      */
-    @TestMethod("testSMILESFileWithNames")
     public PaDELIteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
         sp = new SmilesParser(builder);
         sp.setPreservingAromaticity(true); // PaDEL: Change to true to make sure that aromaticity is not automatically detected in SMILES files.
@@ -101,7 +96,6 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
      *
      * @param  in  The InputStream to read from
      */
-    @TestMethod("testSMILESFileWithNames")
     public PaDELIteratingSMILESReader(InputStream in) {
         this(new InputStreamReader(in), DefaultChemObjectBuilder.getInstance());
     }
@@ -121,7 +115,6 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
      *
      * @return An instance of {@link org.openscience.cdk.io.formats.SMILESFormat}
      */
-    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
@@ -131,7 +124,6 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
      *
      * @return  true if there are molecules to read, false otherwise
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
@@ -185,7 +177,6 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
      *
      * @return The next molecule
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
     public IChemObject next() {
         if (!nextAvailableIsKnown) {
             hasNext();
@@ -202,17 +193,14 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
      *
      * @throws IOException if there is an error during closing
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testClose")
     public void close() throws IOException {
         input.close();
     }
 
-    @TestMethod("testRemove")
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
-	@TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) {
 		if (reader instanceof BufferedReader) {
 			input = (BufferedReader)reader;
@@ -224,7 +212,6 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
         hasNext = false;
     }
 
-    @TestMethod("testSetReader1,testSetReader_InputStream")
     public void setReader(InputStream reader) {
 	    setReader(new InputStreamReader(reader));
     }

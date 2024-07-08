@@ -19,8 +19,6 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,7 +45,6 @@ import java.util.List;
  * @cdk.module qsarmolecular
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiIndexUtilsTest")
 class PaDELChiIndexUtils {
 
     /**
@@ -196,7 +193,6 @@ class PaDELChiIndexUtils {
      * @return The empirical delta V if it is present in one of the above
      *         environments, -1 otherwise
      */
-    @TestMethod("testDeltaVSuplhurSO,testDeltaVSulphurSO2")
     protected static double deltavSulphur(IAtom atom, IAtomContainer atomContainer) {
         if (!atom.getSymbol().equals("S")) return -1;
 

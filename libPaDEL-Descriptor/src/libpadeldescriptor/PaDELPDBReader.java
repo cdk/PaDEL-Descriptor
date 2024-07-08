@@ -37,7 +37,6 @@ import java.util.Map;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -714,7 +713,6 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 		return oAtom;
 	}
 
-	@TestMethod("testClose")
   public void close() throws IOException {
 		_oInput.close();
 	}

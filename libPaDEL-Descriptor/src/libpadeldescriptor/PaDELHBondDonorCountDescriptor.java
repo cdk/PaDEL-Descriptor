@@ -25,7 +25,6 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -91,7 +90,6 @@ public class PaDELHBondDonorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    The specification value
      */
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "PaDELHBondDonorCountDescriptor",
@@ -107,7 +105,6 @@ public class PaDELHBondDonorCountDescriptor implements IMolecularDescriptor {
      * @param  params            this descriptor does not have any parameters
      * @exception  CDKException  Description of the Exception
      */
-    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     // this descriptor has no parameters; nothing has to be done here
     }
@@ -118,13 +115,11 @@ public class PaDELHBondDonorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    null as this descriptor does not have any parameters
      */
-    @TestMethod("testGetParameters")
     public Object[] getParameters() {
     // no parameters; thus we return null
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -141,7 +136,6 @@ public class PaDELHBondDonorCountDescriptor implements IMolecularDescriptor {
      * @param  atomContainer               AtomContainer
      * @return                   number of H bond donors
      */
-    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         int nHBDon_CDK = 0;
         int nHBDon_Lipinski = 0;
@@ -217,7 +211,6 @@ public class PaDELHBondDonorCountDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResult(names.length);
     }
@@ -228,7 +221,6 @@ public class PaDELHBondDonorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    null as this descriptor does not have any parameters
      */
-    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
     // no parameters; thus we return null
         return null;
@@ -242,7 +234,6 @@ public class PaDELHBondDonorCountDescriptor implements IMolecularDescriptor {
      * @param  name  Description of the Parameter
      * @return       null as this descriptor does not have any parameters
      */
-    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
     // no parameters; thus we return null
         return null;

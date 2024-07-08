@@ -23,8 +23,6 @@ package libpadeldescriptor;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -76,7 +74,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword topological bond order ctypes
  * @cdk.keyword descriptor
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptorTest")
 public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
 
 
@@ -89,7 +86,6 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
     public PaDELCarbonTypesDescriptor() {
     }
 
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
@@ -107,7 +103,6 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
      *          Description of the Exception
      * @see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -118,13 +113,11 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
      * @return The parameters value
      * @see #setParameters
      */
-    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -134,7 +127,6 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -147,7 +139,6 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }
@@ -158,7 +149,6 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 9 elements in the order described above
      */
-    @TestMethod("testCalculate_IAtomContainer,testButane,testComplex1,testComplex2")
     public DescriptorValue calculate(IAtomContainer container) {
         int c1sp1 = 0;
         int c2sp1 = 0;
@@ -238,7 +228,6 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResultType(9);
     }
