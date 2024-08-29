@@ -98,7 +98,7 @@ public class CDK_Descriptor extends Thread
      * 
      * @param molecule Molecule for calculating descriptors.
      */
-    public void setMolecule(IAtomContainer molecule) 
+    public void setAtomContainer(IAtomContainer molecule) 
     {
         this.molecule_ = molecule;
         initDescriptorsValues();

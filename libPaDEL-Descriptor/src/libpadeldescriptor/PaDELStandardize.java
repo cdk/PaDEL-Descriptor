@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -158,7 +157,7 @@ public class PaDELStandardize
 
         // Tidy up molecule
         // Assign some properties like ISINRING, ISNOTINRING, ISALIPHATIC to atoms
-        new AtomTypeTools().assignAtomTypePropertiesToAtom((IMolecule)molecule, false);
+        new AtomTypeTools().assignAtomTypePropertiesToAtom((IAtomContainer)molecule, false);
 
         // Add hydrogens
         adder.addImplicitHydrogens(molecule);
@@ -174,13 +173,13 @@ public class PaDELStandardize
         // Get biggest connected molecule.
         if (!ConnectivityChecker.isConnected(molecule))
         {
-            IMoleculeSet molSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-            IMolecule biggest = molSet.getMolecule(0);
-            for (int i = 1; i < molSet.getMoleculeCount(); i++)
+            IAtomContainerSet molSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+            IAtomContainer biggest = molSet.getAtomContainer(0);
+            for (int i = 1; i < molSet.getAtomContainerCount(); i++)
             {
-                if (molSet.getMolecule(i).getBondCount() > biggest.getBondCount())
+                if (molSet.getAtomContainer(i).getBondCount() > biggest.getBondCount())
                 {
-                    biggest = molSet.getMolecule(i);
+                    biggest = molSet.getAtomContainer(i);
                 }
             }
 

@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import libpadeljobs.Worker;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
 
@@ -111,7 +110,7 @@ public class libPaDELDescriptorWorker extends Worker<libPaDELDescriptorJob>
                 // Calculate 3D coordinates.
                 TemplateHandler3D template = TemplateHandler3D.getInstance();
                 ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template,job.getForcefield());
-                molecule = (IAtomContainer) mb3d.generate3DCoordinates((IMolecule) molecule, true);
+                molecule = (IAtomContainer) mb3d.generate3DCoordinates((IAtomContainer) molecule, true);
             }
             catch (Exception ex)
             {
@@ -126,7 +125,7 @@ public class libPaDELDescriptorWorker extends Worker<libPaDELDescriptorJob>
             {
                 try
                 {
-                    cdk_descriptor.setMolecule((IAtomContainer)molecule.clone());
+                    cdk_descriptor.setAtomContainer((IAtomContainer)molecule.clone());
                     cdk_descriptor.run();
                 }
                 catch (Exception ex)

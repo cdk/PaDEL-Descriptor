@@ -599,7 +599,6 @@ public final class ShortestPaths {
 * @return distance to this vertex
 * @see #distanceTo(org.openscience.cdk.interfaces.IAtom)
 */
-
     public int distanceTo(int end) {
         return (end < 0 || end >= nPathsTo.length) ? Integer.MAX_VALUE
                                                    : distTo[end];
@@ -642,7 +641,6 @@ public final class ShortestPaths {
 * @return distance to the given atom
 * @see #distanceTo(int)
 */
-
     public int distanceTo(IAtom end) {
         return distanceTo(container.getAtomNumber(end));
     }

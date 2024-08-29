@@ -43,11 +43,11 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.HINFormat;
@@ -61,7 +61,8 @@ import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.io.iterator.DefaultIteratingChemObjectReader;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundASNReader;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundXMLReader;
 import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReader;
@@ -88,7 +89,7 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
 
     private File molecule;
     private PaDELIteratingSMILESReader iteratingSMILESReader;
-    private IteratingMDLReader iteratingMDLReader;
+    private IteratingSDFReader iteratingSDFReader;
     private IteratingPCCompoundASNReader iteratingPCCompoundASNReader;
     private IteratingPCCompoundXMLReader iteratingPCCompoundXMLReader;
     private IteratingPCSubstancesXMLReader iteratingPCSubstancesXMLReader;
@@ -179,9 +180,9 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
             }
             else if (currentFormat instanceof MDLFormat || currentFormat instanceof MDLV2000Format || currentFormat instanceof MDLV3000Format)
             {
-                if (iteratingMDLReader.hasNext())
+                if (iteratingSDFReader.hasNext())
                 {
-                    nextMolecule = (IAtomContainer)iteratingMDLReader.next();
+                    nextMolecule = (IAtomContainer)iteratingSDFReader.next();
                     ++curLigIndex;
                     hasNext = true;
                 }
@@ -273,7 +274,7 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
     public void close() throws IOException {
         input.close();
         if (iteratingSMILESReader!=null) iteratingSMILESReader.close();
-        if (iteratingMDLReader!=null) iteratingMDLReader.close();
+        if (iteratingSDFReader!=null) iteratingSDFReader.close();
         if (iteratingPCCompoundASNReader!=null) iteratingPCCompoundASNReader.close();
         if (iteratingPCCompoundXMLReader!=null) iteratingPCCompoundXMLReader.close();
         if (iteratingPCSubstancesXMLReader!=null) iteratingPCSubstancesXMLReader.close();
@@ -320,7 +321,7 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
             }
             else if (currentFormat instanceof MDLFormat || currentFormat instanceof MDLV2000Format || currentFormat instanceof MDLV3000Format)
             {
-                iteratingMDLReader = new IteratingMDLReader(input, builder);
+                iteratingSDFReader = new IteratingSDFReader(input, builder);
             }
             else if (currentFormat instanceof PubChemSubstancesASNFormat)
             {
@@ -348,10 +349,10 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
                         IChemSequence cs = cf.getChemSequence(i);
                         for (int j=0, endj=cs.getChemModelCount(); j<endj; ++j)
                         {
-                            IMoleculeSet ms = cs.getChemModel(j).getMoleculeSet();
-                            for (int k=0, endk=ms.getMoleculeCount(); k<endk; ++k)
+                            IAtomContainerSet ms = cs.getChemModel(j).getAtomContainerSet();
+                            for (int k=0, endk=ms.getAtomContainerCount(); k<endk; ++k)
                             {
-                                container.add(ms.getMolecule(k));
+                                container.add(ms.getAtomContainer(k));
                             }
                         }
                     }

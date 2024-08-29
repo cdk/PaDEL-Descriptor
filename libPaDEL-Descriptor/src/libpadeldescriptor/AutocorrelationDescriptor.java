@@ -26,7 +26,6 @@
 package libpadeldescriptor;
 
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
@@ -154,7 +153,7 @@ public class AutocorrelationDescriptor implements IMolecularDescriptor {
         double[] s = new double[natom];
         try
         {
-            Molecule mol = new Molecule((IAtomContainer)container.clone());
+            IAtomContainer mol = new Molecule((IAtomContainer)container.clone());
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
             IntrinsicStateDescriptor isd = new IntrinsicStateDescriptor();
