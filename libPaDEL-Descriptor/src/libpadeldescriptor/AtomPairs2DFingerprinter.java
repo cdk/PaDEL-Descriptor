@@ -28,7 +28,13 @@ package libpadeldescriptor;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.BitSetFingerprint;
+import org.openscience.cdk.fingerprint.IBitFingerprint;
+import org.openscience.cdk.fingerprint.ICountFingerprint;
 import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.fingerprint.IntArrayCountFingerprint;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -114,6 +120,25 @@ public class AtomPairs2DFingerprinter implements IFingerprinter {
                 }
             }
         }
+    }
+
+    // Toevoegen van getCountFingerprint en getBitFingerprint na de constructor
+    @Override
+    public ICountFingerprint getCountFingerprint(
+        IAtomContainer molecule
+    ) throws CDKException {
+        return new IntArrayCountFingerprint(
+            getRawFingerprint(molecule)
+        );
+    }
+
+    @Override
+    public IBitFingerprint getBitFingerprint(
+        IAtomContainer molecule
+    ) throws CDKException {
+        return new BitSetFingerprint(
+            getFingerprint(molecule)
+        );
     }
 
     @Override
