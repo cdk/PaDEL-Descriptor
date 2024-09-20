@@ -28,6 +28,7 @@ package libpadeldescriptor;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
@@ -122,25 +123,6 @@ public class AtomPairs2DFingerprinter implements IFingerprinter {
         }
     }
 
-    // Toevoegen van getCountFingerprint en getBitFingerprint na de constructor
-    @Override
-    public ICountFingerprint getCountFingerprint(
-        IAtomContainer molecule
-    ) throws CDKException {
-        return new IntArrayCountFingerprint(
-            getRawFingerprint(molecule)
-        );
-    }
-
-    @Override
-    public IBitFingerprint getBitFingerprint(
-        IAtomContainer molecule
-    ) throws CDKException {
-        return new BitSetFingerprint(
-            getFingerprint(molecule)
-        );
-    }
-
     @Override
     public int getSize()
     {
@@ -190,6 +172,30 @@ public class AtomPairs2DFingerprinter implements IFingerprinter {
         }
 
         return fp;
+    }
+
+    @Override
+    public String getVersionDescription() {
+        // Method not needed in this PaDEL version, so return an empty string or null
+        return "";  // or you can return null, depending on the use case
+    }
+
+    @Override
+    public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
+        // Since the method isn't needed, just return null
+        return null;
+    }
+
+    @Override
+    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+        // Method not needed in this PaDEL version, so return an empty string or null
+        return null;
+    }
+
+    @Override
+    public Map<String, Integer> getRawFingerprint(IAtomContainer container) throws CDKException {
+        // Method not needed in this PaDEL version, so return an empty string or null
+        return null;
     }
 }
 
