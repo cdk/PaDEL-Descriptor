@@ -43,9 +43,9 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * Number of rings
- * <p/>
+ * 
  * The code calculates the number of 3-membered, 4-membered, ..., 12-membered, >12-membered rings.
- * <p/>
+ * 
  * The value returned is nRing, n3Ring, n4Ring, n5Ring, n6Ring, n7Ring, n8Ring, n9Ring, n10Ring, n11Ring, n12Ring, nG12Ring,
  * nFRing, nF4Ring, nF5Ring, nF6Ring, nF7Ring, nF8Ring, nF9Ring, nF10Ring, nF11Ring, nF12Ring, nFG12Ring,
  * nTRing, nT4Ring, nT5Ring, nT6Ring, nT7Ring, nT8Ring, nT9Ring, nT10Ring, nT11Ring, nT12Ring, nTG12Ring,
@@ -57,7 +57,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * The third set of rings is the Set of all Rings (i.e. first set + second set).
  * Thus fused rings will also result in a count for a higher-membered ring.
  * For instance, a bicyclohexane will have n6Ring as 2, nF10Ring as 1, nT6Ring as 2 and nT10Ring as 1.
- * <p/>
+ * 
  *
  * @author Yap Chun Wei
  * @cdk.created 2010-05-01
@@ -360,7 +360,7 @@ public class RingCountDescriptor implements IMolecularDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

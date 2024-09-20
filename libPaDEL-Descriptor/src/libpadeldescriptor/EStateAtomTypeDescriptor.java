@@ -48,10 +48,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Evaluates Atom Type Electrotopological descriptors.
- * <p/>
+ * 
  * The code currently computes all of the sum of Atom Type Electrotopological 
  * descriptors that are calculated by the MolConn-Z software. 
- * <p/>
+ * 
  *
  * @author Yap Chun Wei
  * @cdk.created 2008-06-10
@@ -541,7 +541,6 @@ public class EStateAtomTypeDescriptor implements IMolecularDescriptor {
      * 
      * @param container AtomContainer
      * @return
-     * @throws org.openscience.cdk.exception.CDKException
      */
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
@@ -973,7 +972,7 @@ public class EStateAtomTypeDescriptor implements IMolecularDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

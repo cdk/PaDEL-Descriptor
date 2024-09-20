@@ -42,12 +42,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * McGowan characteristic volume
- * <p/>
+ * 
  * The code currently computes the McGowan characteristic volume. 
  * Abraham MH, McGowan JC. The use of characteristic volumes to measure cavity terms in reversed phase liquid chromatography. Chromatographia. 1987;23:243-6.
- * <p/>
+ * 
  * The value returned is McGowan_V
- * <p/>
+ * 
  *
  * @author Yap Chun Wei
  * @cdk.created 2008-07-07
@@ -214,7 +214,7 @@ public class McGowanVolumeDescriptor implements IMolecularDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

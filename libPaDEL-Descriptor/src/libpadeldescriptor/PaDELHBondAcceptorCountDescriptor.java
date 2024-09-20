@@ -45,44 +45,36 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Slightly simplified version of the <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
  * The following groups are counted as hydrogen bond acceptors:
  * <ul>
- * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
+ * <li> {@literal any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0), except} </li>
  * <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
  * <li>an oxygen that is adjacent to a nitrogen</li>
- * </ol>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
+ * <li> {@literal any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0), except} </li> 
  * <li>a nitrogen that is adjacent to an oxygen</li>
- * </ol>
  * </ul>
  *
  * nHBAcc2
  * The following groups are counted as hydrogen bond acceptors:
  * <ul>
  * <li>any oxygen</li>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
+ * <li> {@literal any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0), except} </li>
  * <li>a non-aromatic nitrogen that is adjacent to an oxygen and aromatic ring</li>
  * <li>an aromatic nitrogen with a hydrogen atom in a ring</li>
  * <li>an aromatic nitrogen with 3 neighouring atoms in a ring</li>
  * <li>a nitrogen with total bond order >=4</li>
- * </ol>
- * <li>any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)</li>
+ * <li> {@literal any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)} </li>
  * </ul>
  *
  * nHBAcc3
  * The following groups are counted as hydrogen bond acceptors:
  * <ul>
  * <li>any oxygen</li>
- * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
- * <ol>
+ * <li> {@literal any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0), except} </li>
  * <li>a non-aromatic nitrogen that is adjacent to an oxygen and aromatic ring</li>
  * <li>an aromatic nitrogen with a hydrogen atom in a ring</li>
  * <li>an aromatic nitrogen with 3 neighouring atoms in a ring</li>
  * <li>a nitrogen with total bond order >=4</li>
  * <li>a nitrogen in an amide bond</li>
- * </ol>
- * <li>any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)</li>
+ * <li> {@literal any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)}</li>
  * </ul>
  *
  * Lipinski
@@ -103,6 +95,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * <p>This descriptor uses these parameters:
  * <table>
+ * <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -393,7 +386,7 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

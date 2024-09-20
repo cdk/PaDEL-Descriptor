@@ -53,7 +53,7 @@ import org.openscience.cdk.io.DefaultChemObjectReader;
  * @cdk.module io
  * @cdk.githash
  *
- * @author  Rajarshi Guha <rajarshi.guha@gmail.com>
+ * @author  Rajarshi Guha {@code <rajarshi.guha@gmail.com>}
  * @cdk.created 2004-01-27
  *
  * @cdk.keyword file format, HIN 

@@ -46,10 +46,11 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *  is specified, the returned value is the molecular weight.
  *  If an invalid element symbol is specified, the return value is
  *  0 and no exception is thrown
- *  <p>
+ *  
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
+ * <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -226,7 +227,7 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

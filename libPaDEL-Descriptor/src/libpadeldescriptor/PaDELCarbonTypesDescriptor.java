@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Topological descriptor characterizing the carbon connectivity.
- * <p/>
+ * 
  * The class calculates 9 descriptors in the following order
  * <ul>
  * <li>C1SP1 triply hound carbon bound to one other carbon
@@ -54,6 +54,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * </ul>
  * <p>This descriptor uses these parameters:
  * <table border="1">
+ * <caption>Table Caption</caption>
  * <tr>
  * <td>Name</td>
  * <td>Default</td>
@@ -228,7 +229,7 @@ public class PaDELCarbonTypesDescriptor implements IMolecularDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

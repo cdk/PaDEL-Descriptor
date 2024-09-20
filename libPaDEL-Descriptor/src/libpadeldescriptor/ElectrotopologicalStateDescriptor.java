@@ -44,8 +44,8 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *  There must not be any implicit hydrogens for all the atoms. <p>
  *
  *  This descriptor uses these parameters:
- *  <tableborder="1">
- *
+ *  <table border="1">
+ * <caption>Table Caption</caption>
  *    <tr>
  *
  *      <td>
@@ -169,9 +169,8 @@ public class ElectrotopologicalStateDescriptor implements IAtomicDescriptor {
      *  There must not be any implicit hydrogens for all the atoms.
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
- *@param  ac                AtomContainer
+     *@param  ac                AtomContainer
      *@return                   a double with electrotopological state of the heavy atom
-     *@exception  CDKException
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     @Override
@@ -215,7 +214,6 @@ public class ElectrotopologicalStateDescriptor implements IAtomicDescriptor {
      * @param  ac                AtomContainer
      * @param pathLengths        Array of shortest paths between atoms and other atoms in the container.
      * @return                   a double with electrotopological state of the heavy atom
-     * @exception  CDKException
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac, int[] pathLengths) {
         try

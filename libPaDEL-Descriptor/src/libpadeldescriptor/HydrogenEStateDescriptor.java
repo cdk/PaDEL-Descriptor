@@ -25,7 +25,7 @@
 package libpadeldescriptor;
 
 
-
+import java.io.IOException;
 import java.util.Iterator;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -45,8 +45,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  There must not be any implicit hydrogens for all the atoms.<p>
  *
  *  This descriptor uses these parameters:
- *  <tableborder="1">
- *
+ *  <table border="1">
+ * <caption>Table Caption</caption>
  *    <tr>
  *
  *      <td>
@@ -85,9 +85,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@author         yapchunwei
  *@cdk.created    2008-06-10
  *@cdk.module     qsaratomic
- * @cdk.svnrev  $Revision: 1 $
+ *@cdk.svnrev     $Revision: 1 $
  *@cdk.set        qsar-descriptors
- * @cdk.dictref qsar-descriptors:hydrogenEStateDescriptor
+ *@cdk.dictref    qsar-descriptors:hydrogenEStateDescriptor
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.hydrogenEStateDescriptorTest")
 public class HydrogenEStateDescriptor implements IAtomicDescriptor {
@@ -97,8 +97,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 	/**
 	 *  Constructor for the HydrogenEStateDescriptor object
 	 *
-	 *@exception  IOException             Description of the Exception
-	 *@exception  ClassNotFoundException  Description of the Exception
 	 */
 	public HydrogenEStateDescriptor() {
 	}
@@ -174,7 +172,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
 	 *@return                   a double with hydrogen eletrotopological state of the heavy atom
-	 *@exception  CDKException
 	 */
         @TestMethod(value="testCalculate_IAtomContainer")
     @Override
@@ -223,7 +220,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
          * @param  ac                AtomContainer
          * @param pathLengths        Array of shortest paths between atoms and other atoms in the container.
          * @return                   a double with hydrogen eletrotopological state of the heavy atom
-         * @exception  CDKException
          */
         public DescriptorValue calculate(IAtom atom, IAtomContainer ac, int[] pathLengths) {
             try
