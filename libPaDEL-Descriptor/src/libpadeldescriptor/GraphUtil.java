@@ -21,6 +21,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
 */
+
 package libpadeldescriptor;
 
 import com.google.common.collect.Maps;
@@ -42,6 +43,7 @@ import static java.util.Arrays.copyOf;
 * @cdk.module core
 * @cdk.githash
 * @see ShortestPaths
+* {@code org.openscience.cdk.ringsearch.RingSearch}
 */
 @TestClass("org.openscience.cdk.graph.GraphUtilTest")
 public class GraphUtil {
@@ -161,7 +163,7 @@ public class GraphUtil {
 *
 * int[][] h = subgraph(g, vs);
 * // for the vertices in h, the provided 'vs' gives the original index
-* for(int v = 0; v < h.length; v++) {
+* for(int v = 0; v {@literal <} h.length; v++) {
 * // vs[v] is 'v' in 'g'
 * }
 * </pre></blockquote>
@@ -223,7 +225,7 @@ public class GraphUtil {
 * same)
 * @throws IllegalArgumentException thrown if the vertices do not form a
 * cycle
-* @code org.openscience.cdk.ringsearch.RingSearch#isolated()
+* {@code org.openscience.cdk.ringsearch.RingSearch#isolated()}
 */
     @TestMethod("testCycle,testAcyclic,testAcyclic2")
     public static int[] cycle(int[][] graph, int[] vertices) {

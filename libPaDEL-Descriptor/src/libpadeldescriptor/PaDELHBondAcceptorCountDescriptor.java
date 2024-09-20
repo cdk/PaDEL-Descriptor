@@ -22,6 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
@@ -43,17 +44,26 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * CDK
  * Slightly simplified version of the <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
- * The following groups are counted as hydrogen bond acceptors:
- * 
- * - Any oxygen with a non-positive formal charge (i.e., formal charge &le; 0), except for:
- *   - An aromatic ether oxygen (adjacent to at least one aromatic carbon).
- *   - An oxygen adjacent to a nitrogen.
- *
- * - Any nitrogen with a non-positive formal charge (i.e., formal charge &le; 0), except for:
- *   - A nitrogen that is adjacent to an oxygen.
+ * The following groups are counted as hydrogen bond acceptors:ZZ
+ * <ul>
+ * <li> {@literal any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0), except} </li>
+ * <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
+ * <li>an oxygen that is adjacent to a nitrogen</li>
+ * <li> {@literal any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0), except} </li> 
+ * <li>a nitrogen that is adjacent to an oxygen</li>
+ * </ul>
  *
  * nHBAcc2
  * The following groups are counted as hydrogen bond acceptors:
+ * <ul>
+ * <li>any oxygen</li>
+ * <li> {@literal any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0), except} </li>
+ * <li>a non-aromatic nitrogen that is adjacent to an oxygen and aromatic ring</li>
+ * <li>an aromatic nitrogen with a hydrogen atom in a ring</li>
+ * <li>an aromatic nitrogen with 3 neighouring atoms in a ring</li>
+ * <li>a nitrogen with total bond order >=4</li>
+ * <li> {@literal any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)} </li>
+ * </ul>
  *
  * - Any oxygen.
  * - Any nitrogen where the formal charge of the nitrogen is non-positive (i.e., formal charge ≤ 0), except for:
@@ -66,15 +76,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * nHBAcc3
  * The following groups are counted as hydrogen bond acceptors:
- *
- * - Any oxygen.
- * - Any nitrogen where the formal charge of the nitrogen is non-positive (i.e., formal charge ≤ 0), except for:
- *   - A non-aromatic nitrogen that is adjacent to an oxygen and an aromatic ring.
- *   - An aromatic nitrogen with a hydrogen atom in a ring.
- *   - An aromatic nitrogen with three neighboring atoms in a ring.
- *   - A nitrogen with a total bond order ≥ 4.
- *   - A nitrogen in an amide bond.
- * - Any fluorine where the formal charge of the fluorine is non-positive (i.e., formal charge ≤ 0).
+ * <ul>
+ * <li>any oxygen</li>
+ * <li> {@literal any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0), except} </li>
+ * <li>a non-aromatic nitrogen that is adjacent to an oxygen and aromatic ring</li>
+ * <li>an aromatic nitrogen with a hydrogen atom in a ring</li>
+ * <li>an aromatic nitrogen with 3 neighouring atoms in a ring</li>
+ * <li>a nitrogen with total bond order >=4</li>
+ * <li>a nitrogen in an amide bond</li>
+ * <li> {@literal any fluorine where the formal charge of the fluorine is non-positive (i.e. formal charge <= 0)}</li>
+ * </ul>
  *
  * Lipinski
  * Lipinski CA, Lombardo F, Dominy BW, Feeney PJ: Experimental and computational approaches to estimate solubility and permeability in drug discovery and development settings. Adv Drug Deliv Rev 1997, 23:3-25.
@@ -94,7 +105,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * <p>This descriptor uses these parameters:
  * <table>
- *  <caption>Table Caption</caption>
+ * <caption>Table Caption</caption>
  *   <tr>
  *     <td>Name</td>
  *     <td>Default</td>
@@ -385,7 +396,7 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
+     * 
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method

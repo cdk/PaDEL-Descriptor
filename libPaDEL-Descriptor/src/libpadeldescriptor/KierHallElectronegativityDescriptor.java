@@ -82,11 +82,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  </table>
  *
  *
- *@author         yapchunwei
- *@cdk.created    2008-06-10
- *@cdk.module     qsaratomic
+ * @author         yapchunwei
+ * @cdk.created    2008-06-10
+ * @cdk.module     qsaratomic
  * @cdk.svnrev  $Revision: 1 $
- *@cdk.set        qsar-descriptors
+ * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierHallElectronegativity
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.kierHallElectronegativityDescriptorTest")
@@ -174,7 +174,6 @@ public class KierHallElectronegativityDescriptor implements IAtomicDescriptor {
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
 	 *@return                   a double with Kier and Hall electronegativity of the heavy atom
-	 *@exception  CDKException  if the atomic number or period cannot be found for any atom in the supplied AtomContainer
 	 */
     @TestMethod(value="testCalculate_IAtomContainer")
     @Override

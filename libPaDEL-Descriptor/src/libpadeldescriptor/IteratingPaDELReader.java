@@ -99,8 +99,7 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
     /**
      * Constructs a new IteratingPaDELReader that can read Molecule from a given Reader.
      *
-     * @param  in  The Reader to read from
-     * @param builder The builder to use
+     * @param molecule
      * @see org.openscience.cdk.DefaultChemObjectBuilder
      * @see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder
      */

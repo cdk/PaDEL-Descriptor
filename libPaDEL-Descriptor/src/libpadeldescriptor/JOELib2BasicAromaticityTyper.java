@@ -28,6 +28,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 package libpadeldescriptor;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import org.openscience.cdk.Atom;
@@ -44,7 +45,6 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
 
 
-
 /**
  *  Aromatic typer.
  * The definition file can be defined in the
@@ -56,11 +56,13 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * joelib2.data.JOEAromaticTyper.resourceFile=<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/joelib/joelib/src/joelib2/data/plain/aromatic.txt?rev=HEAD&content-type=text/vnd.viewcvs-markup">joelib2/data/plain/aromatic.txt</a>
  *
  * @author     wegnerj
- * wikipedia page Aromaticity
- * wikipedia page Friedrich August Kekulé von Stradonitz
- * wikipedia page Molecule
- * license GPL
- * cvsversion    $Revision: 1.7 $, $Date: 2005/03/03 07:13:36 $
+ * {@literal wikipedia Aromaticity}
+ * {@literal wikipedia Friedrich August Kekulé von Stradonitz}
+ * {@literal wikipedia Molecule}
+ * {@literal license GPL}
+ * {@literal cvsversion    $Revision: 1.7 $, $Date: 2005/03/03 07:13:36 $}
+ * {@literal wsi.ra.tool.BasicPropertyHolder}
+ * {@literal wsi.ra.tool.BasicResourceLoader}
  */
 public class JOELib2BasicAromaticityTyper 
 {
