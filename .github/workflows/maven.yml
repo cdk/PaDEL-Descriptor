@@ -19,6 +19,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Change to the ~/PaDEL-Descriptor/libPaDEL folder
-      run: cd PaDEL-Descriptor/libPaDEL
+      run: cd libPaDEL
     - name: Build with Maven
       run: mvn pom.xml
