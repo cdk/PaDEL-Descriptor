@@ -25,7 +25,7 @@ jobs:
 
   libPaDEL-Jobs:
     runs-on: ubuntu-latest
-    uses:
+    needs: libPaDEL
 
     steps:
     - uses: actions/checkout@v4
