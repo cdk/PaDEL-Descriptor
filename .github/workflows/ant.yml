@@ -17,7 +17,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        cache: maven
+        cache: ant
     - name: Change to the libPaDEL folder
       run: cd libPaDEL
     - name: Build with Ant
@@ -34,7 +34,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        cache: maven
+        cache: ant
     - name: Change to the libPaDEL-Jobs folder
       run: cd libPaDEL-Jobs
     - name: Build with Ant
