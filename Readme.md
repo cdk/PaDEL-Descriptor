@@ -1,4 +1,4 @@
-# PaDEL-Descriprot
+# PaDEL-Descriptor
 
 In order to run PaDEL from the terminal follow the steps below.
 
