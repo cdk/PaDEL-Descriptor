@@ -1,6 +1,8 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.fingerprint.PubchemFingerprinter;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 
 /**
  * Make PubchemFingerprinter in CDK runnable in a separate thread.
@@ -12,7 +14,9 @@ public class CDK_PubchemFingerprinter extends CDK_Fingerprint
     public CDK_PubchemFingerprinter()
     {
         super();
-        cdkFingerprinter_ = new PubchemFingerprinter(); 
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        boolean someBooleanValue = true;
+        cdkFingerprinter_ = new PubchemFingerprinter(builder, someBooleanValue);
         initDescriptorsValues();
         this.setPrefix("PubchemFP");
     }

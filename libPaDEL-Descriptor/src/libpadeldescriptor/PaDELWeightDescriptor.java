@@ -26,9 +26,11 @@ package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -166,7 +168,7 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
                 int maxAtoms = 0;
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     //logger.debug("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
-                    weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                    weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     Integer hcount = container.getAtom(i).getImplicitHydrogenCount();
                     if (hcount == CDKConstants.UNSET) hcount = 0;
                     weight += (hcount * 1.00782504);                    
@@ -187,10 +189,10 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
         }
         else if (elementName.equals("H")) {
             try {
-                IIsotope h=IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
+                IIsotope h=Isotopes.getInstance().getMajorIsotope("H");
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                        weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
                     else {
                         weight += (container.getAtom(i).getImplicitHydrogenCount() * h.getExactMass());
@@ -204,7 +206,7 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
             try {
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                        weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
                 }
             } catch (Exception e) {
@@ -255,5 +257,13 @@ public class PaDELWeightDescriptor implements IMolecularDescriptor {
     public Object getParameterType(String name) {
         return "";
     }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
+
 }
 

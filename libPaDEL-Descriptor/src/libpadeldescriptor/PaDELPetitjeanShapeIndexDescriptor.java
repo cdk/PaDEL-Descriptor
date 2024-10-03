@@ -23,6 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -200,6 +201,13 @@ public class PaDELPetitjeanShapeIndexDescriptor implements IMolecularDescriptor 
      */
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(names.length);
+    }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
     }
 }
     

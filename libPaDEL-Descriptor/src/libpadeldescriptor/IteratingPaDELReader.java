@@ -102,7 +102,7 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
      *
      * @param molecule
      * @see org.openscience.cdk.DefaultChemObjectBuilder
-     * @see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder
+     * {@see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder}
      */
     public IteratingPaDELReader(File molecule) throws FileNotFoundException {
         this.builder = DefaultChemObjectBuilder.getInstance();
@@ -116,7 +116,7 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
      * @param  in  The Reader to read from
      * @param builder The builder to use
      * @see org.openscience.cdk.DefaultChemObjectBuilder
-     * @see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder
+     * {@see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder}
      */
     public IteratingPaDELReader(Reader in, IChemObjectBuilder builder) {
         this.builder = builder;
@@ -349,7 +349,7 @@ public class IteratingPaDELReader extends DefaultIteratingChemObjectReader {
                         IChemSequence cs = cf.getChemSequence(i);
                         for (int j=0, endj=cs.getChemModelCount(); j<endj; ++j)
                         {
-                            IAtomContainerSet ms = cs.getChemModel(j).getAtomContainerSet();
+                            IAtomContainerSet ms = cs.getChemModel(j).getMoleculeSet();
                             for (int k=0, endk=ms.getAtomContainerCount(); k<endk; ++k)
                             {
                                 container.add(ms.getAtomContainer(k));

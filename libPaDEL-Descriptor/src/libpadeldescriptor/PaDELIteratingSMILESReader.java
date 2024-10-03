@@ -81,7 +81,7 @@ public class PaDELIteratingSMILESReader extends DefaultIteratingChemObjectReader
      * @param  in  The Reader to read from
      * @param builder The builder to use
      * @see org.openscience.cdk.DefaultChemObjectBuilder
-     * @see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder
+     * {@see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder}
      */
     public PaDELIteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
         sp = new SmilesParser(builder);

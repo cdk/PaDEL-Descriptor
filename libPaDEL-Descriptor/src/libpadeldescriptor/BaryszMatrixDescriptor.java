@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -82,6 +83,13 @@ public class BaryszMatrixDescriptor implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id: BaryszMatrixDescriptor.java 1 2014-06-12 11:00:00Z yapchunwei $",
                 "PaDEL");
+    }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
     }
 
     @Override

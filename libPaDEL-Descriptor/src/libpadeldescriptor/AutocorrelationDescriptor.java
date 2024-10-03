@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -105,6 +106,13 @@ public class AutocorrelationDescriptor implements IMolecularDescriptor {
         }
     }
 
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
+
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -153,7 +161,7 @@ public class AutocorrelationDescriptor implements IMolecularDescriptor {
         double[] s = new double[natom];
         try
         {
-            IAtomContainer mol = new Molecule((IAtomContainer)container.clone());
+            IAtomContainer mol = (IAtomContainer) container.clone();
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
             IntrinsicStateDescriptor isd = new IntrinsicStateDescriptor();

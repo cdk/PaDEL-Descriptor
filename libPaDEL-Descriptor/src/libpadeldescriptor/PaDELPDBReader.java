@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
@@ -298,7 +299,7 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 
 							// add the atom
 							oBP.addAtom(oAtom, oMonomer, oStrand);
-							if (readConnect.isSet() && atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
+							if (readConnect.isSet() && atomNumberMap.put(Integer.valueOf(oAtom.getSerial()), oAtom) != null) {
 								logger.warn("Duplicate serial ID found for atom: ", oAtom);
 							}
                                                         molecularStructure.addAtom(oAtom); // PaDEL
@@ -314,7 +315,7 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 						oAtom = readAtom(cRead, lineLength);
 						oAtom.setHetAtom(true);
 						oBP.addAtom(oAtom);
-						if (atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
+						if (atomNumberMap.put(Integer.valueOf(oAtom.getSerial()), oAtom) != null) {
 							logger.warn("Duplicate serial ID found for atom: ", oAtom);
 						}
 						logger.debug("Added HETATM: ", oAtom);
@@ -337,7 +338,7 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
                                                     logger.info("Bonds could not be created when PDB file was read.");
                                                     logger.debug(exception);
                                                 }
-                                                oSet.addMolecule(molecularStructure); // PaDEL
+                                                oSet.addAtomContainer(molecularStructure); // PaDEL
 					} else if ("END   ".equalsIgnoreCase(cCol)) {
 						atomNumberMap.clear();
 						if (isProteinStructure) {
@@ -354,7 +355,7 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 									logger.debug(exception);
 								}
 							}
-							oSet.addMolecule(oBP);
+							oSet.addAtomContainer(oBP);
                                                         
 						}
 
@@ -369,14 +370,14 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
                                                     logger.info("Bonds could not be created when PDB file was read.");
                                                     logger.debug(exception);
                                                 }
-                                                oSet.addMolecule(molecularStructure); // PaDEL
+                                                oSet.addAtomContainer(molecularStructure); // PaDEL
 					} else if (cCol.equals("MODEL ")) {
 						// OK, start a new model and save the current one first *if* it contains atoms
 						if (isProteinStructure) {
 							if (oBP.getAtomCount() > 0) {
 								// save the model
 								oSet.addAtomContainer(oBP);
-								oModel.setAtomContainerSet(oSet);
+								oModel.setMoleculeSet(oSet);
 								oSeq.addChemModel(oModel);
 								// setup a new one
 								oBP = new PDBPolymer();
@@ -387,7 +388,7 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 							if (molecularStructure.getAtomCount() > 0) {
 //								 save the model
 								oSet.addAtomContainer(molecularStructure);
-								oModel.setAtomContainerSet(oSet);
+								oModel.setMoleculeSet(oSet);
 								oSeq.addChemModel(oModel);
 								// setup a new one
 								molecularStructure = oFile.getBuilder().newInstance(IAtomContainer.class);
@@ -527,7 +528,7 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 		}
 
 		// Set all the dependencies
-		oModel.setAtomContainerSet(oSet);
+		oModel.setMoleculeSet(oSet);
 		oSeq.addChemModel(oModel);
 		oFile.addChemSequence(oSeq);
 
@@ -535,9 +536,9 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 	}
 
 	private void addBond(PDBPolymer obp, int bondAtomNo, int bondedAtomNo) {
-		IAtom firstAtom = (PDBAtom)atomNumberMap.get(new Integer(bondAtomNo));
-		IAtom secondAtom = (PDBAtom)atomNumberMap.get(new Integer(bondedAtomNo));
-		if (firstAtom == null) {
+		IAtom firstAtom = (PDBAtom)atomNumberMap.get(Integer.valueOf(bondAtomNo));
+		IAtom secondAtom = (PDBAtom)atomNumberMap.get(Integer.valueOf(bondedAtomNo));
+				if (firstAtom == null) {
 			logger.error("Could not find bond start atom in map with serial id: ", bondAtomNo);
 		}
 		if (secondAtom == null) {
@@ -717,12 +718,10 @@ public class PaDELPDBReader extends DefaultChemObjectReader {
 	}
 
     private void initIOSettings() {
-    	useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
-          "Should the PDBReader deduce bonding patterns?",
-          "false");
-        readConnect = new BooleanIOSetting("ReadConnectSection", IOSetting.LOW,
-          "Should the CONECT be read?",
-          "true");
+		useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.Importance.LOW,
+		"Should the PDBReader deduce bonding patterns?", "false");
+        readConnect = new BooleanIOSetting("ReadConnectSection", IOSetting.Importance.LOW,
+    "Should the CONECT be read?", "true");
     }
 
     public void customizeJob() {

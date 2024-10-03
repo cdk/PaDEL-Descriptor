@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
@@ -295,7 +296,7 @@ public class PaDELHINReader extends DefaultChemObjectReader {
             }
         }
 
-        for (IAtomContainer mol : mols) setOfMolecules.addMolecule(mol);
+        for (IAtomContainer mol : mols) setOfMolecules.addAtomContainer(mol);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         file.addChemSequence(chemSequence);

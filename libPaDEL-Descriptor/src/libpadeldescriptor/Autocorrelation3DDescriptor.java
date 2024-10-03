@@ -31,6 +31,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -57,6 +58,8 @@ public class Autocorrelation3DDescriptor implements IMolecularDescriptor {
     public String[] names;
     private static final String[] wtypes = {"u", "m", "v", "e", "p", "i", "s", "r"};
 
+    private IChemObjectBuilder builder;
+
     public Autocorrelation3DDescriptor()
     {
         names = new String[wtypes.length*maxLag];
@@ -71,6 +74,11 @@ public class Autocorrelation3DDescriptor implements IMolecularDescriptor {
         }
     }
 
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
+    
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(

@@ -29,6 +29,7 @@ package libpadeldescriptor;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -72,6 +73,13 @@ public class SubstructureFingerprintCount implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id: SubstructureCountDescriptor.java 1 2010-05-01 22:05:01Z yapchunwei $",
                 "PaDEL");
+    }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
     }
 
     @Override
@@ -136,7 +144,7 @@ public class SubstructureFingerprintCount implements IMolecularDescriptor {
         try
         {
             DoubleArrayResult retval = new DoubleArrayResult();
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+            SMARTSQueryTool sqt = new SMARTSQueryTool("C", builder);
             for (int i = 0; i < smarts.length; i++) {
                 String pattern = smarts[i];
 

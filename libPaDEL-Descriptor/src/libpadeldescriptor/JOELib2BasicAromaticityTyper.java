@@ -36,10 +36,12 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
 
@@ -304,7 +306,8 @@ public class JOELib2BasicAromaticityTyper
         try
         {
             //mark atoms as potentially aromatic
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+            SMARTSQueryTool sqt = new SMARTSQueryTool("C", builder);
             for (int idx=0, k=0; k<smarts.length; ++k, ++idx)
             {
                 String pattern = smarts[k];

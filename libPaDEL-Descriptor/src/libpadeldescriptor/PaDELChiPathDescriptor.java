@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -320,6 +321,13 @@ public class PaDELChiPathDescriptor implements IMolecularDescriptor {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return PaDELChiIndexUtils.getFragments(atomContainer, queries);
+    }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
     }
 
 }

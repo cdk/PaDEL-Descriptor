@@ -20,6 +20,7 @@ package libpadeldescriptor;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,11 +63,14 @@ class PaDELChiIndexUtils {
      */
     public static List<List<Integer>> getFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries) {
         List<List<Integer>> uniqueSubgraphs = new ArrayList<List<Integer>>();
+
+        UniversalIsomorphismTester tester = new UniversalIsomorphismTester();
+        
         for (QueryAtomContainer query : queries) {
             List subgraphMaps = null;
             try {
                 // we get the list of bond mappings
-                subgraphMaps = UniversalIsomorphismTester.getSubgraphMaps(atomContainer, query);
+                subgraphMaps = tester.getSubgraphMaps(atomContainer, query);
             } catch (CDKException e) {
                 e.printStackTrace();
             }
@@ -130,8 +134,8 @@ class PaDELChiIndexUtils {
      */
     public static double evalValenceIndex(IAtomContainer atomContainer, List fragList) throws CDKException {
         try {
-            IsotopeFactory ifac = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
-            ifac.configureAtoms(atomContainer);
+            IsotopeFactory isofac = Isotopes.getInstance();
+            isofac.configureAtoms(atomContainer);
         } catch (IOException e) {
             throw new CDKException("IO problem occured when using the CDK atom config\n"+e.getMessage(), e);
         }

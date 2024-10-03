@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.AtomValenceTool;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -99,6 +100,12 @@ public class ExtendedTopochemicalAtomDescriptor implements IMolecularDescriptor 
      */
     public ExtendedTopochemicalAtomDescriptor() {}
 
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
 
     /**
      *  Gets the specification attribute of the ExtendedTopochemicalAtomDescriptor object
