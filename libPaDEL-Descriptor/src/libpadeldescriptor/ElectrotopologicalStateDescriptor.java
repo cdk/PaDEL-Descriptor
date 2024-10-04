@@ -44,7 +44,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  *  This descriptor uses these parameters:
  *  <table border="1">
- * <caption>Table Caption</caption>
+ *  <caption>Table Caption</caption>
  *    <tr>
  *
  *      <td>
