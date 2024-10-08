@@ -25,9 +25,9 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -60,6 +60,13 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
         elementName = "*";
     }
 
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
+
     /**
      * Returns a <code>Map</code> which specifies which descriptor
      * is implemented by this class.
@@ -75,7 +82,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod("testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -93,7 +99,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
      *or else the parameter is not of type String
      *@see #getParameters
      */
-    @TestMethod("testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
@@ -112,7 +117,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
      *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod("testGetParameters")
     @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
@@ -121,7 +125,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return names;
@@ -137,7 +140,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
 
     // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
     // this could be useful for other descriptors like polar surface area...
-    @TestMethod("testCalculate_IAtomContainer")
     @Override
     public DescriptorValue calculate(IAtomContainer container) {
         elementName = "*";
@@ -224,7 +226,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
@@ -236,7 +237,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -251,7 +251,6 @@ public class HeavyAtomCountDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       An Object whose class is that of the parameter requested
      */
-    @TestMethod("testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return "";

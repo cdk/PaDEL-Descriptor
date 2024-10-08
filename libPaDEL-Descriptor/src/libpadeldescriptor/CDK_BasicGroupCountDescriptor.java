@@ -20,9 +20,8 @@ public class CDK_BasicGroupCountDescriptor extends CDK_Descriptor
             cdkDescriptor_ = new BasicGroupCountDescriptor();
             initDescriptorsValues();
         }
-        catch (CDKException ex)
+        finally
         {
-            Logger.getLogger(CDK_BasicGroupCountDescriptor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

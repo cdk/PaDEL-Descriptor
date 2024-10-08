@@ -35,9 +35,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import libpadeldescriptor.libPaDELDescriptorJob;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /*
@@ -91,7 +93,7 @@ public class CompoundConvert3D extends CompoundAbstractProcessing
         {
             for (int i=0, endi=mols.size(); i<endi; ++i)
             {
-                ori.addMolecule((IAtomContainer)mols.getMolecule(i).clone());
+                ori.addAtomContainer((IAtomContainer)mols.getAtomContainer(i).clone());
             }
         }
         catch (Exception ex)
@@ -104,13 +106,13 @@ public class CompoundConvert3D extends CompoundAbstractProcessing
         {
             for (int i=0, endi=mols.size(); i<endi; ++i)
             {
-                mols.setMolecule(i, Convert3D(mols.getMolecule(i), forcefield));
+                mols.setAtomContainer(i, Convert3D(mols.getAtomContainer(i), forcefield));
             }
         }
         else
         {
             int cpdIndex = getParameterAsInt(PARAMETER_CPD_INDEX);            
-            mols.setMolecule(cpdIndex-1, Convert3D(mols.getMolecule(cpdIndex-1), forcefield));
+            mols.setAtomContainer(cpdIndex-1, Convert3D(mols.getAtomContainer(cpdIndex-1), forcefield));
         }
         
         mols.recalculateStatistics();
@@ -125,9 +127,10 @@ public class CompoundConvert3D extends CompoundAbstractProcessing
         {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             // Calculate 3D coordinates.
+            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
             TemplateHandler3D template = TemplateHandler3D.getInstance();
-            ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template,forcefield);
-            return (IAtomContainer) mb3d.generate3DCoordinates((IMolecule) molecule, true);
+            ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template, forcefield, builder);
+            return (IAtomContainer) mb3d.generate3DCoordinates((IAtomContainer) molecule, true);
         }
         catch (Exception ex)
         {

@@ -305,10 +305,11 @@ public class libPaDELDescriptorMaster extends Master<libPaDELDescriptorJob, libP
             }
             else
             {
-                if (molStructure.getProperty("cdk:Title")!=null &&
-                    !((String)molStructure.getProperty("cdk:Title")).trim().isEmpty())
-                {
-                   name.append(molStructure.getProperty("cdk:Title"));
+                if (molStructure.getProperty("cdk:Title") != null) {
+                    String title = String.valueOf(molStructure.getProperty("cdk:Title"));
+                    if (!title.trim().isEmpty()) {
+                        name.append(title); // Now there is no ambiguity
+                    }
                 }
                 else
                 {

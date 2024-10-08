@@ -7,15 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.smiles.SmiFlavor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.AtomTypeTools;
@@ -158,7 +159,7 @@ public class PaDELStandardize
 
         // Tidy up molecule
         // Assign some properties like ISINRING, ISNOTINRING, ISALIPHATIC to atoms
-        new AtomTypeTools().assignAtomTypePropertiesToAtom((IMolecule)molecule, false);
+        new AtomTypeTools().assignAtomTypePropertiesToAtom((IAtomContainer)molecule, false);
 
         // Add hydrogens
         adder.addImplicitHydrogens(molecule);
@@ -174,17 +175,17 @@ public class PaDELStandardize
         // Get biggest connected molecule.
         if (!ConnectivityChecker.isConnected(molecule))
         {
-            IMoleculeSet molSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-            IMolecule biggest = molSet.getMolecule(0);
-            for (int i = 1; i < molSet.getMoleculeCount(); i++)
+            IAtomContainerSet molSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+            IAtomContainer biggest = molSet.getAtomContainer(0);
+            for (int i = 1; i < molSet.getAtomContainerCount(); i++)
             {
-                if (molSet.getMolecule(i).getBondCount() > biggest.getBondCount())
+                if (molSet.getAtomContainer(i).getBondCount() > biggest.getBondCount())
                 {
-                    biggest = molSet.getMolecule(i);
+                    biggest = molSet.getAtomContainer(i);
                 }
             }
 
-            molecule = (Molecule) biggest;
+            molecule = (AtomContainer) biggest;
         }
         return molecule;
     }
@@ -257,13 +258,15 @@ public class PaDELStandardize
 
     private IAtomContainer Dearomatize(IAtomContainer molecule) throws InvalidSmilesException, CDKException
     {
-        // Get molecule name.
-        StringBuffer molName = new StringBuffer();
-        molName.setLength(0);
-        if (molecule.getProperty("cdk:Title")!=null)
-        {
-           molName.append(molecule.getProperty("cdk:Title"));
-        }
+// Get molecule name.
+StringBuffer molName = new StringBuffer(); // No need to set length to 0
+Object title = molecule.getProperty("cdk:Title");
+
+if (title != null) {
+    molName.append(String.valueOf(title));  // Ensure non-string values are handled
+} else {
+    System.out.println("Title property is null or not found.");
+}
 
         if (!retain3D_)
         {
@@ -278,7 +281,7 @@ public class PaDELStandardize
 
         if (!retain3D_)
         {
-            molecule = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(new SmilesGenerator(true).createSMILES(molecule));
+            molecule = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.Stereo).createSMILES(molecule));
             molecule.setProperty("cdk:Title", molName.toString());
         }
 
@@ -295,7 +298,7 @@ public class PaDELStandardize
         molName.setLength(0);
         if (molecule.getProperty("cdk:Title")!=null)
         {
-           molName.append(molecule.getProperty("cdk:Title"));
+            molName.append((CharSequence) molecule.getProperty("cdk:Title"));
         }
 
         // Add hydrogens. Necessary for InChITautomerGenerator.
@@ -373,7 +376,7 @@ public class PaDELStandardize
                     	lastPosTransform = curPos;
                     	if (!retain3D_)
                         {
-                            molecule = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(new SmilesGenerator(true).createSMILES(molecule));
+                            molecule = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(new SmilesGenerator(SmiFlavor.Default).createSMILES(molecule));
                             molecule.setProperty("cdk:Title", molName.toString());
                         }
                     }

@@ -21,17 +21,16 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
@@ -79,17 +78,14 @@ public class PaDELHINReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
-    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return HINFormat.getInstance();
     }
 
-    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }
 
-    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -98,12 +94,10 @@ public class PaDELHINReader extends DefaultChemObjectReader {
         }
     }
 
-    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
         for (Class anInterface : interfaces) {
@@ -155,12 +149,12 @@ public class PaDELHINReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) {
         IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-        IMoleculeSet setOfMolecules = file.getBuilder().newInstance(IMoleculeSet.class);
+        IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
         String info;
 
         StringTokenizer tokenizer;
         List<String> aroringText = new ArrayList<String>();
-        List<IMolecule> mols = new ArrayList<IMolecule>();
+        List<IAtomContainer> mols = new ArrayList<IAtomContainer>();
 
         try {
             String line;
@@ -185,7 +179,7 @@ public class PaDELHINReader extends DefaultChemObjectReader {
                     info = getMolName(line);
                     line = input.readLine();
                 }
-                IMolecule m = file.getBuilder().newInstance(IMolecule.class);
+                IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
                 m.setProperty(CDKConstants.TITLE ,info);
 
                 // Each element of cons is an ArrayList of length 3 which stores
@@ -302,7 +296,7 @@ public class PaDELHINReader extends DefaultChemObjectReader {
             }
         }
 
-        for (IMolecule mol : mols) setOfMolecules.addMolecule(mol);
+        for (IAtomContainer mol : mols) setOfMolecules.addAtomContainer(mol);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         file.addChemSequence(chemSequence);

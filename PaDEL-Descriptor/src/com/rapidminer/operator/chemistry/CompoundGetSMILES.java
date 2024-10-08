@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
@@ -69,19 +71,31 @@ public class CompoundGetSMILES extends CompoundAbstractProcessing
         ArrayList<String> smiles = new ArrayList<String>(mols.size());
         for (int i=0, endi=mols.size(); i<endi; ++i)
         {
-            IAtomContainer molecule = mols.getMolecule(i);
+            IAtomContainer molecule = mols.getAtomContainer(i);
 
             try
             {
-                ori.addMolecule((IAtomContainer)molecule.clone());                
+                ori.addAtomContainer((IAtomContainer)molecule.clone());                
             }
             catch (Exception ex)
             {
                 Logger.getLogger("global").log(Level.FINE, null, ex);
             }
 
-            smiles.add(new SmilesGenerator(detectAromaticity).createSMILES(molecule));
+        SmilesGenerator generator;
+        if (detectAromaticity) {
+            generator = SmilesGenerator.unique().aromatic();  // Enable aromaticity detection
+        } else {
+            generator = SmilesGenerator.unique();  // No aromaticity detection
         }
+
+        try {
+            smiles.add(generator.create(molecule));  // This may throw CDKException
+        } catch (CDKException e) {
+            Logger.getLogger("global").log(Level.SEVERE, "Error generating SMILES for molecule: " + molecule, e);
+            smiles.add("Error: " + e.getMessage());  // Optionally handle the error
+        }
+    }
         mols.addColumn("SMILES", smiles.toArray(new String[] {}));
 
     	molOriginal.deliver(ori);

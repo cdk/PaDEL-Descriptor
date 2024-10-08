@@ -20,9 +20,8 @@ public class CDK_AcidicGroupCountDescriptor extends CDK_Descriptor
             cdkDescriptor_ = new AcidicGroupCountDescriptor();
             initDescriptorsValues();
         }
-        catch (CDKException ex)
+        finally
         {
-            Logger.getLogger(CDK_AcidicGroupCountDescriptor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

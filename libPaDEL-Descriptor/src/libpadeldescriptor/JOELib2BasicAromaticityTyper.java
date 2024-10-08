@@ -34,13 +34,15 @@ import java.util.List;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
 
@@ -58,7 +60,7 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * @author     wegnerj
  * {@literal wikipedia Aromaticity}
  * {@literal wikipedia Friedrich August Kekulé von Stradonitz}
- * {@literal wikipedia Molecule}
+ * {@literal wikipedia IAtomContainer}
  * {@literal license GPL}
  * {@literal cvsversion    $Revision: 1.7 $, $Date: 2005/03/03 07:13:36 $}
  * {@literal wsi.ra.tool.BasicPropertyHolder}
@@ -304,7 +306,8 @@ public class JOELib2BasicAromaticityTyper
         try
         {
             //mark atoms as potentially aromatic
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+            SMARTSQueryTool sqt = new SMARTSQueryTool("C", builder);
             for (int idx=0, k=0; k<smarts.length; ++k, ++idx)
             {
                 String pattern = smarts[k];

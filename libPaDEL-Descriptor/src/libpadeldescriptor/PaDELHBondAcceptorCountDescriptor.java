@@ -26,12 +26,12 @@
 package libpadeldescriptor;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -136,7 +136,6 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    The specification value
      */
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "PaDELHBondAcceptorCountDescriptor",
@@ -151,7 +150,6 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @param  params            a boolean true means that aromaticity has to be checked
      * @exception  CDKException  Description of the Exception
      */
-    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("PaDELHBondAcceptorCountDescriptor expects a single parameter");
@@ -168,7 +166,6 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    The parameters value
      */
-    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -176,7 +173,6 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -193,7 +189,6 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @param  atomContainer             AtomContainer
      * @return                   number of H bond acceptors     
      */
-    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         int nHBAcc_CDK = 0;
         int nHBAcc_2 = 0;
@@ -405,7 +400,6 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
-    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResult(names.length);
     }
@@ -415,7 +409,6 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    The parameterNames value
      */
-    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -428,9 +421,16 @@ public class PaDELHBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @param  name  Description of the Parameter
      * @return       The parameterType value
      */
-    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return false;
     }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
+
 }
 

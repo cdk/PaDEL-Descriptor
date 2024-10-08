@@ -35,12 +35,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -115,6 +117,13 @@ public class InformationContentDescriptor implements IMolecularDescriptor {
                                          };
 
     public InformationContentDescriptor() {
+    }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
     }
 
     @Override
@@ -370,6 +379,16 @@ public class InformationContentDescriptor implements IMolecularDescriptor {
     {   
         int maxAtoms = atomContainer.getAtomCount();
         double sum = 0;
+
+        Isotopes isofac;
+
+        try {
+            isofac = Isotopes.getInstance();  // Move the getInstance() inside try-catch
+        } catch (IOException ex) {
+            Logger.getLogger(InformationContentDescriptor.class.getName()).log(Level.SEVERE, "Error getting Isotopes instance", ex);
+            return 0;  // Return 0 or handle this error as needed if instance creation fails
+        }
+
         for (ArrayList<Coordinate> coordinates : classes.keySet())
         {
             Integer n = classes.get(coordinates);
@@ -377,8 +396,10 @@ public class InformationContentDescriptor implements IMolecularDescriptor {
             double m = 0.0;
             try 
             {
-                m = IsotopeFactory.getInstance(atomContainer.getBuilder()).getMajorIsotope(coordinates.get(0).a).getExactMass();
-            } 
+                m = Isotopes.getInstance()
+                .getMajorIsotope(coordinates.get(0).a)
+                .getExactMass();          
+                } 
             catch (IOException ex) 
             {
                 Logger.getLogger(InformationContentDescriptor.class.getName()).log(Level.SEVERE, null, ex);                

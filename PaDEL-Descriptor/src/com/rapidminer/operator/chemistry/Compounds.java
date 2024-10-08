@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import libpadeldescriptor.CDK_AtomCountDescriptor;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.AtomContainer;
 
 public class Compounds extends PaDELSimpleTable
 {
@@ -46,7 +47,7 @@ public class Compounds extends PaDELSimpleTable
         return mols.size();
     }
 
-    public void addMolecule(IAtomContainer mol)
+    public void addAtomContainer(IAtomContainer mol)
     {
         mols.add(mol);
         addRow(String.valueOf(mols.size()), new String[] { (String)mol.getProperty("cdk:Title"), "", "", "", "" });
@@ -69,11 +70,11 @@ public class Compounds extends PaDELSimpleTable
         String nFragments = "1";
         if (!ConnectivityChecker.isConnected(mol))
         {
-            IMoleculeSet molSet = ConnectivityChecker.partitionIntoMolecules(mol);
-            nFragments = String.valueOf(molSet.getMoleculeCount());
+            IAtomContainerSet molSet = ConnectivityChecker.partitionIntoMolecules(mol);
+            nFragments = String.valueOf(molSet.getAtomContainerCount());
         }
         CDK_AtomCountDescriptor nH = new CDK_AtomCountDescriptor(new String[] {"H"});
-        nH.setMolecule(mol);
+        nH.setAtomContainer(mol);
         nH.run();
         String nHydrogens = String.valueOf(nH.getDescriptorValues()[0]);
 
@@ -101,18 +102,18 @@ public class Compounds extends PaDELSimpleTable
         return temp;
     }
 
-    public IAtomContainer getMolecule(int index)
+    public IAtomContainer getAtomContainer(int index)
     {
         return mols.get(index);
     }
 
-    public void setMolecule(int index, IAtomContainer mol)
+    public void setAtomContainer(int index, IAtomContainer mol)
     {
         mols.set(index, mol);
         calculateStatistics(mol, index);
     }
 
-    public String getMoleculeName(int index)
+    public String getAtomContainerName(int index)
     {
         return (String)mols.get(index).getProperty("cdk:Title");
     }

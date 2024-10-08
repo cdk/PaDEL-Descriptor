@@ -58,11 +58,11 @@ public class CompoundDetectDimensionality extends CompoundAbstractProcessing
         DecimalFormat df = new DecimalFormat("#0.0000");
         for (int i=0, endi=mols.size(); i<endi; ++i)
         {
-            IAtomContainer molecule = mols.getMolecule(i);
+            IAtomContainer molecule = mols.getAtomContainer(i);
 
             try
             {
-                ori.addMolecule((IAtomContainer)molecule.clone());                
+                ori.addAtomContainer((IAtomContainer)molecule.clone());                
             }
             catch (Exception ex)
             {

@@ -22,11 +22,11 @@ package libpadeldescriptor;
 
 import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -66,13 +66,19 @@ public class PaDELBondCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The specification value
      */
-    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "PaDELBondCountDescriptor",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");
+    }
+
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
     }
 
     @Override
@@ -126,7 +132,6 @@ public class PaDELBondCountDescriptor implements IMolecularDescriptor {
      *@param  container  AtomContainer
      *@return            The number of bonds of a certain type.
      */
-    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
 
         int nBonds = 0;

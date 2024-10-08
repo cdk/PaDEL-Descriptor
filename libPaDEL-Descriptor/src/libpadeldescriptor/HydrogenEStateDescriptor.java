@@ -27,12 +27,11 @@ package libpadeldescriptor;
 
 import java.io.IOException;
 import java.util.Iterator;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -89,7 +88,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@cdk.set        qsar-descriptors
  *@cdk.dictref    qsar-descriptors:hydrogenEStateDescriptor
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.hydrogenEStateDescriptorTest")
 public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 
     private static final String[] names = {"HydrogenEState"};
@@ -101,6 +99,12 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 	public HydrogenEStateDescriptor() {
 	}
 
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
 
     /**
      *  Gets the specification attribute of the HydrogenEStateDescriptor
@@ -108,7 +112,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
      *
      *@return    The specification value
      */
-    @TestMethod(value="testGetSpecification")
     @Override
     public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
@@ -122,7 +125,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 	/**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
     @Override
     public void setParameters(Object[] params) throws CDKException {
     }
@@ -135,7 +137,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 	 * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value="testGetParameters")
     @Override
     public Object[] getParameters() {
         return null;
@@ -146,7 +147,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
      * 
      * @return  Names of descriptors
      */
-    @TestMethod(value="testNamesConsistency")
     @Override
     public String[] getDescriptorNames() {
         return names;
@@ -173,7 +173,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
      *@param  ac                AtomContainer
 	 *@return                   a double with hydrogen eletrotopological state of the heavy atom
 	 */
-        @TestMethod(value="testCalculate_IAtomContainer")
     @Override
         public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
             try
@@ -268,7 +267,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 	 *
 	 * @return    The parameterNames value
 	 */
-	@TestMethod(value="testGetParameterNames")
     @Override
     public String[] getParameterNames() {
         return new String[0];
@@ -281,7 +279,6 @@ public class HydrogenEStateDescriptor implements IAtomicDescriptor {
 	 * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value="testGetParameterType_String")
     @Override
     public Object getParameterType(String name) {
         return null;

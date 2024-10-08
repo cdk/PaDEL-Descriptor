@@ -30,12 +30,14 @@ import java.util.Iterator;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -110,6 +112,13 @@ public class McGowanVolumeDescriptor implements IMolecularDescriptor {
 
     }
 
+    private IChemObjectBuilder builder;
+
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
+        this.builder = builder;
+    }
+
     @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
@@ -173,7 +182,8 @@ public class McGowanVolumeDescriptor implements IMolecularDescriptor {
         try
         {
             // Calculate McGowan characteristic volume, V
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C");        
+            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+            SMARTSQueryTool sqt = new SMARTSQueryTool("C", builder);        
             int maxAtomTypes = atomTypes.length;
             double V = 0.0;
             for (int i=0; i<maxAtomTypes; ++i)

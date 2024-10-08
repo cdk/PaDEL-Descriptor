@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.DefaultChemObjectWriter;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.Mol2Writer;
@@ -50,6 +50,7 @@ import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.io.SMILESWriter;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 /*
     This operator writes compounds to one or several
@@ -132,7 +133,7 @@ public class CompoundWriter extends AbstractWriter<Compounds>
             {
                 for (int i=0, endi=mols.size(); i<endi; ++i)
                 {
-                    WriteMolecule(dir + File.separator + mols.getMoleculeName(i), mols.getMolecule(i));
+                    WriteAtomContainer(dir + File.separator + mols.getAtomContainerName(i), mols.getAtomContainer(i));
                 }
             }
             else
@@ -146,7 +147,7 @@ public class CompoundWriter extends AbstractWriter<Compounds>
             if (type != 2)
             {
                 int cpdIndex = getParameterAsInt(PARAMETER_CPD_INDEX) - 1;
-                WriteMolecule(getParameterAsString(PARAMETER_MOL_FILE), mols.getMolecule(cpdIndex));
+                WriteAtomContainer(getParameterAsString(PARAMETER_MOL_FILE), mols.getAtomContainer(cpdIndex));
             }
             else
             {
@@ -160,7 +161,7 @@ public class CompoundWriter extends AbstractWriter<Compounds>
                     writer = new SDFWriter(fw);
                     for (int i=0, endi=mols.size(); i<endi; ++i)
                     {
-                        writer.write(mols.getMolecule(i));
+                        writer.write(mols.getAtomContainer(i));
                     }
                 }
                 catch (Exception ex)
@@ -187,7 +188,7 @@ public class CompoundWriter extends AbstractWriter<Compounds>
         return mols;
     }
 
-    private void WriteMolecule(String path, IAtomContainer mol) throws OperatorException
+    private void WriteAtomContainer(String path, IAtomContainer mol) throws OperatorException
     {
         DefaultChemObjectWriter writer = null;
         int type = getParameterAsInt(PARAMETER_MOL_TYPE);
@@ -225,8 +226,10 @@ public class CompoundWriter extends AbstractWriter<Compounds>
                 try
                 {
                     TemplateHandler3D template = TemplateHandler3D.getInstance();
-                    ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template,"mm2");
-                    mol = (IAtomContainer) mb3d.generate3DCoordinates((IMolecule) mol, true);
+                    IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance(); 
+
+                    ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template, "mm2", builder);
+                    mol = (IAtomContainer) mb3d.generate3DCoordinates((IAtomContainer) mol, true);
                     writer.write(mol);
                 }
                 catch (Exception ex1)
