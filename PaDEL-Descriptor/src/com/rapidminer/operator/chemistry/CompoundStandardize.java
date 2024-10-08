@@ -124,12 +124,12 @@ public class CompoundStandardize extends CompoundAbstractProcessing
             
         for (int i=0, endi=mols.size(); i<endi; ++i)
         {
-            IAtomContainer molecule = mols.getMolecule(i);
+            IAtomContainer molecule = mols.getAtomContainer(i);
 
             try
             {
                 molecule = standardize.Standardize(molecule);
-                mols.setMolecule(i, molecule);
+                mols.setAtomContainer(i, molecule);
             }
             catch (Exception ex)
             {

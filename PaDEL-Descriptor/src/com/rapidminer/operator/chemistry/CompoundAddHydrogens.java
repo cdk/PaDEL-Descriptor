@@ -50,11 +50,11 @@ public class CompoundAddHydrogens extends CompoundAbstractProcessing
 
         for (int i=0, endi=mols.size(); i<endi; ++i)
         {
-            IAtomContainer molecule = mols.getMolecule(i);
+            IAtomContainer molecule = mols.getAtomContainer(i);
 
             try
             {
-                ori.addMolecule((IAtomContainer)molecule.clone());
+                ori.addAtomContainer((IAtomContainer)molecule.clone());
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
                 CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
                 adder.addImplicitHydrogens(molecule);

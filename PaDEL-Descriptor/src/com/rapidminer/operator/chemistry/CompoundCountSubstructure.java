@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
 /*
@@ -72,13 +74,14 @@ public class CompoundCountSubstructure extends CompoundAbstractProcessing
         ArrayList<String> counts = new ArrayList<String>(mols.size());
         for (int i=0, endi=mols.size(); i<endi; ++i)
         {
-            IAtomContainer molecule = mols.getMolecule(i);
+            IAtomContainer molecule = mols.getAtomContainer(i);
 
             try
             {
-                ori.addMolecule((IAtomContainer)molecule.clone());
+                ori.addAtomContainer((IAtomContainer)molecule.clone());
 
-                SMARTSQueryTool sqt = new SMARTSQueryTool(smart);
+                IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+                SMARTSQueryTool sqt = new SMARTSQueryTool(smart, builder);
                 if (sqt.matches(molecule))
                 {
                     counts.add(String.valueOf(sqt.getUniqueMatchingAtoms().size()));

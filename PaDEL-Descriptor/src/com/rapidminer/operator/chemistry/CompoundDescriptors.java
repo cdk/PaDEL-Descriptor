@@ -336,7 +336,7 @@ public class CompoundDescriptors extends Operator
             List<String> descriptorValues = results.get(i);
             int maxDescriptors = descriptorValues.size() + 1;
             double[] data = new double[maxDescriptors];
-            data[0] = exampleTable.findAttribute("Compound").getMapping().mapString(mols.getMoleculeName(i-1));
+            data[0] = exampleTable.findAttribute("Compound").getMapping().mapString(mols.getAtomContainerName(i-1));
             for (int j=0, endj=descriptorValues.size(); j<endj; ++j)
             {
                 if (!descriptorValues.get(j).equals(""))

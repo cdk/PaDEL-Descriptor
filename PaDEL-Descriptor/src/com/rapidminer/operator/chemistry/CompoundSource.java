@@ -164,8 +164,10 @@ public class CompoundSource extends AbstractReader<Compounds>
             molName.setLength(0);
             if (mol.getProperty("cdk:Title")!=null && getParameterAsBoolean(PARAMETER_FILENAME_AS_NAME)==false)
             {
-               molName.append(mol.getProperty("cdk:Title"));
-            }
+                Object title = mol.getProperty("cdk:Title");
+                if (title != null) {
+                    molName.append((String) title);
+                }            }
             else
             {
                 String prefix = getParameterAsBoolean(PARAMETER_FILENAME_AS_NAME) ? "" : "AUTOGEN_";
@@ -185,11 +187,11 @@ public class CompoundSource extends AbstractReader<Compounds>
 
             if (index==-1)
             {
-                molecules.addMolecule(mol);
+                molecules.addAtomContainer(mol);
             }
             else if (PaDELReaderCount==index)
             {
-                molecules.addMolecule(mol);
+                molecules.addAtomContainer(mol);
                 break;
             }
         }

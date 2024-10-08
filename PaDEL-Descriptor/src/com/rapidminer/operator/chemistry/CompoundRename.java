@@ -71,7 +71,7 @@ public class CompoundRename extends CompoundAbstractProcessing
         {
             for (int i=0, endi=mols.size(); i<endi; ++i)
             {
-                ori.addMolecule((IAtomContainer)mols.getMolecule(i).clone());
+                ori.addAtomContainer((IAtomContainer)mols.getAtomContainer(i).clone());
             }
         }
         catch (Exception ex)
@@ -82,7 +82,7 @@ public class CompoundRename extends CompoundAbstractProcessing
         int cpdIndex = getParameterAsInt(PARAMETER_CPD_INDEX);
         String cpdNewName = getParameterAsString(PARAMETER_CPD_NEW_NAME);
         mols.setMoleculeName(cpdIndex-1, cpdNewName);
-        mols.calculateStatistics(mols.getMolecule(cpdIndex-1), cpdIndex-1);
+        mols.calculateStatistics(mols.getAtomContainer(cpdIndex-1), cpdIndex-1);
 
     	molOriginal.deliver(ori);
     	molOutput.deliver(mols);
