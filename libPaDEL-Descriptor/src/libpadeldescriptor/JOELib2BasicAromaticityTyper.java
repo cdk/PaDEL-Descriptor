@@ -28,6 +28,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 package libpadeldescriptor;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import org.openscience.cdk.Atom;
@@ -43,7 +44,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-
 
 
 
